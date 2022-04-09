@@ -1,18 +1,28 @@
 import {
   ApolloClient,
-  ApolloProvider, InMemoryCache
+  ApolloProvider, gql, InMemoryCache
 } from '@apollo/client';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-const client = new ApolloClient({
+export const client = new ApolloClient({
   uri: 'http://localhost:4000/',
   cache: new InMemoryCache(),
 });
 
-// queries
+client
+  .query({
+    query: gql`
+    {
+      categories{
+        name
+      }
+    }
+    `
+  })
+  .then((result) => console.log(result));
 
 ReactDOM.render(
   <React.StrictMode>
