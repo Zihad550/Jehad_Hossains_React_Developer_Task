@@ -5,11 +5,11 @@ import logo from '../../assets/logo/logo.svg';
 import Anchor from '../../Components/Anchor';
 import HeaderContainer from '../../Components/HeaderContainer';
 
-function Header() {
+function Header({ handleCategory }) {
   const navs = [
-    { id: 1, name: 'Women', link: '/' },
-    { id: 1, name: 'Men', link: '/' },
-    { id: 1, name: 'Kids', link: '/' }
+    { id: 1, name: 'all', link: '/' },
+    { id: 2, name: 'clothes', link: '/' },
+    { id: 3, name: 'tech', link: '/' }
   ];
   return (
     <HeaderContainer>
@@ -17,7 +17,7 @@ function Header() {
       <nav>
         {
             navs.map((nav) => (
-              <Anchor as={Link} key={nav.id} to={nav.link}>
+              <Anchor onClick={() => handleCategory(nav.name)} as={Link} key={nav.id} to={nav.link}>
                 {nav.name}
               </Anchor>
             ))

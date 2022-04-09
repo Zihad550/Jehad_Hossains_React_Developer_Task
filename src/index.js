@@ -1,6 +1,6 @@
 import {
   ApolloClient,
-  ApolloProvider, gql, InMemoryCache
+  ApolloProvider, InMemoryCache
 } from '@apollo/client';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -12,7 +12,7 @@ export const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-client
+/* client
   .query({
     query: gql`
     {
@@ -22,7 +22,7 @@ client
     }
     `
   })
-  .then((result) => console.log(result));
+  .then((result) => console.log(result)); */
 
 ReactDOM.render(
   <React.StrictMode>
