@@ -1,30 +1,11 @@
 import { gql } from '@apollo/client';
 import React, { Component } from 'react';
-import Container from '../../Components/Container';
+import Container from '../../Components/Styles/Containers/Container';
+import ProductsContainer from '../../Components/Styles/Containers/ProductsContainer';
+import Title from '../../Components/Styles/Tags/Title';
 import { client } from '../../index';
 import Header from '../Header/Header';
 import Product from '../Product/Product';
-
-/*
- {
-        category(input: {title: ${this.state.category}}){
-          products{
-            id
-            name
-            inStock
-            prices{
-              amount
-              currency{
-                symbol
-                label
-              }
-            }
-            gallery
-          }
-        }
-      }
-
-*/
 
 export default class Home extends Component {
   state = {
@@ -65,15 +46,13 @@ export default class Home extends Component {
       }
       `
     }).then((result) => {
-      console.log(result);
       this.setState({ result });
     });
   };
 
   render() {
     const { data, error, loading } = this.state.result;
-    console.log(this.state.category);
-    console.log(data, error, loading);
+    const { category } = this.state;
     if (loading) {
       return <h2>Page loading</h2>;
     }
@@ -81,12 +60,20 @@ export default class Home extends Component {
       <Container>
         {/* header */}
         <Header handleCategory={this.handleCategory} />
+
+        {/* title */}
+        <Title>
+          {category}
+        </Title>
+
         {/* main */}
-        {
-          data.map((product) => (
+        <ProductsContainer>
+          {
+          data?.category.products.map((product) => (
             <Product product={product} key={product.id} />
           ))
         }
+        </ProductsContainer>
 
       </Container>
     );
