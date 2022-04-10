@@ -10,7 +10,8 @@ import Product from '../Product/Product';
 export default class Home extends Component {
   state = {
     category: 'all',
-    result: {}
+    products: [],
+    productsLoading: true,
   };
 
   // call get products when component mounts
@@ -45,15 +46,15 @@ export default class Home extends Component {
         }
       }
       `
-    }).then((result) => {
-      this.setState({ result });
+    }).then((res) => {
+      console.log(res);
+      this.setState({ products: res.data.category.products, productsLoading: res.loading });
     });
   };
 
   render() {
-    const { data, error, loading } = this.state.result;
-    const { category } = this.state;
-    if (loading) {
+    const { category, productsLoading, products } = this.state;
+    if (productsLoading) {
       return <h2>Page loading</h2>;
     }
     return (
@@ -69,7 +70,7 @@ export default class Home extends Component {
         {/* main */}
         <ProductsContainer>
           {
-          data?.category.products.map((product) => (
+          products.map((product) => (
             <Product product={product} key={product.id} />
           ))
         }

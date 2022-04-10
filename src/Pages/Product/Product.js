@@ -1,6 +1,6 @@
 import React from 'react';
 import Cart from '../../Components/Cart';
-import ProductContainer from '../../Components/Styles/Containers/ProductContainer';
+import Card, { CardBody, CardHeader } from '../../Components/Styles/Containers/Card';
 
 function Product({ product }) {
   const {
@@ -9,18 +9,31 @@ function Product({ product }) {
   const { currency, amount } = prices[0];
   console.log(prices);
   return (
-    <ProductContainer>
-      <img style={{ width: '100%' }} src={gallery[0]} alt="" />
-      <div>
-        <Cart width="20px" color="white" />
-      </div>
-      <h4>
-        {name}
-      </h4>
-      <p>
-        {`${currency.symbol} ${amount}`}
-      </p>
-    </ProductContainer>
+    <Card>
+
+      <CardHeader>
+        <img style={{ width: '100%' }} src={gallery[0]} alt="" />
+        {
+          inStock || (
+          <p>
+            Out Of Stock
+          </p>
+          )
+        }
+      </CardHeader>
+
+      <CardBody>
+        <div>
+          <Cart width="20px" color="white" />
+        </div>
+        <h4>
+          {name}
+        </h4>
+        <p>
+          {`${currency.symbol} ${amount}`}
+        </p>
+      </CardBody>
+    </Card>
   );
 }
 
