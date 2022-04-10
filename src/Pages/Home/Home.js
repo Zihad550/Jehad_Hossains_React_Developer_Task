@@ -12,6 +12,8 @@ export default class Home extends Component {
     category: 'all',
     products: [],
     productsLoading: true,
+    currency: 'USD',
+    cartProducts: [],
   };
 
   // call get products when component mounts
@@ -22,6 +24,19 @@ export default class Home extends Component {
   // handle category
   handleCategory = (category) => {
     this.setState({ category });
+  };
+
+  // handle currency
+  handleCurrency = (currency) => {
+    this.setState({ currency });
+  };
+
+  // handle add to cart
+  handleAddToCart = (product) => {
+    // this.setState({ cartProducts: product });
+    this.setState((prevState) => ({
+      cartProducts: [...prevState.cartProducts, product]
+    }));
   };
 
   // get products by category
@@ -47,20 +62,22 @@ export default class Home extends Component {
       }
       `
     }).then((res) => {
-      console.log(res);
       this.setState({ products: res.data.category.products, productsLoading: res.loading });
     });
   };
 
   render() {
-    const { category, productsLoading, products } = this.state;
+    const {
+      category, productsLoading, products, currency, cartProducts
+    } = this.state;
+    console.log(cartProducts);
     if (productsLoading) {
       return <h2>Page loading</h2>;
     }
     return (
       <Container>
         {/* header */}
-        <Header handleCategory={this.handleCategory} />
+        <Header cartProducts={cartProducts} handleCategory={this.handleCategory} handleCurrency={this.handleCurrency} />
 
         {/* title */}
         <Title>
@@ -71,7 +88,7 @@ export default class Home extends Component {
         <ProductsContainer>
           {
           products.map((product) => (
-            <Product product={product} key={product.id} />
+            <Product product={product} key={product.id} handleAddToCart={this.handleAddToCart} currency={currency} />
           ))
         }
         </ProductsContainer>

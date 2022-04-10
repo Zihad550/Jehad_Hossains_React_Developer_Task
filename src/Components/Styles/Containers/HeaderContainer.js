@@ -9,8 +9,10 @@ const HeaderContainer = styled.div`
 
 export const Features = styled.div`
     display: flex;
-   p{
-       cursor: pointer
+   button{
+       cursor: pointer;
+       border: 0;
+       background: none;
    }
 `;
 

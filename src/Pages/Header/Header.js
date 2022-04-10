@@ -2,15 +2,18 @@ import { gql } from '@apollo/client';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../assets/logo/logo.svg';
-import Cart from '../../Components/Cart';
-import HeaderContainer, { Currency, Features } from '../../Components/Styles/Containers/HeaderContainer';
+import Cart from '../../Components/CartIcon';
+import HeaderContainer, { Features } from '../../Components/Styles/Containers/HeaderContainer';
 import Anchor from '../../Components/Styles/Tags/Anchor';
+import Select from '../../Components/Styles/Tags/Select';
 import { client } from '../../index';
+import ShoppingCart from '../ShoppingCart/ShoppingCart';
 
 class Header extends React.Component {
   state = {
     currencies: [],
     loading: true,
+    showCart: false,
   };
 
   navs = [
@@ -32,17 +35,23 @@ class Header extends React.Component {
           symbol
         }
       }
-      
       `
     }).then((res) => {
       this.setState({ currencies: res.data.currencies, loading: res.loading });
     });
   };
 
+  handleShowCart = () => {
+    this.setState((state) => ({
+      showCart: !state.showCart
+
+    }));
+  };
+
   render() {
-    const { handleCategory } = this.props;
-    const { currencies, loading } = this.state;
-    console.log(currencies);
+    const { handleCategory, handleCurrency, cartProducts } = this.props;
+    const { currencies, loading, showCart } = this.state;
+    console.log(showCart);
     if (loading) {
       return <h2>Data loading</h2>;
     }
@@ -66,18 +75,24 @@ class Header extends React.Component {
         {/* features */}
         <Features>
           {/* currency */}
-          <Currency>
-            {/* &#x24; */}
-            {currencies[0].symbol}
-            <svg width="8" height="4" viewBox="0 0 8 4" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M1 0.5L4 3.5L7 0.5" stroke="black" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
+          <Select onChange={(e) => handleCurrency(e.target.value)}>
+            {
+                currencies.map((currency) => (
+                  <option key={currency.label} value={currency.label}>{currency.symbol}</option>
+                ))
+              }
+          </Select>
 
-          </Currency>
           {/* shopping cart */}
-          <p>
-            <Cart color="black" width="20px" />
-          </p>
+          <div>
+            <button type="button" onClick={this.handleShowCart}>
+              <Cart color="black" width="20px" />
+            </button>
+            {
+              showCart && <ShoppingCart cartProducts={cartProducts} />
+            }
+
+          </div>
         </Features>
 
       </HeaderContainer>

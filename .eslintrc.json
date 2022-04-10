@@ -24,6 +24,7 @@
     "react/state-in-constructor": 0,
     "react/no-unused-state": 0,
     "no-unused-vars": 0,
-    "max-len": 0
+    "max-len": 0,
+    "no-shadow": 0
   }
 }

@@ -1,13 +1,13 @@
 import React from 'react';
-import Cart from '../../Components/Cart';
+import Cart from '../../Components/CartIcon';
 import Card, { CardBody, CardHeader } from '../../Components/Styles/Containers/Card';
 
-function Product({ product }) {
+function Product({ product, currency: changedCurrency, handleAddToCart }) {
   const {
     name, inStock, prices, gallery
   } = product;
-  const { currency, amount } = prices[0];
-  console.log(prices);
+  const price = prices.find((price) => price.currency.label === changedCurrency);
+  const { amount, currency } = price;
   return (
     <Card>
 
@@ -24,7 +24,9 @@ function Product({ product }) {
 
       <CardBody>
         <div>
-          <Cart width="20px" color="white" />
+          <button onClick={() => handleAddToCart(product)} type="button">
+            <Cart width="20px" color="white" />
+          </button>
         </div>
         <h4>
           {name}

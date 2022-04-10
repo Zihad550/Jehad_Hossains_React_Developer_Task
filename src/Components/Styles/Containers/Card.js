@@ -81,7 +81,12 @@ export const CardBody = styled.div`
         color: #1D1F22;
         margin: 0px 0px;
     }
-        
+    
+    button{
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
     
 `;
 
