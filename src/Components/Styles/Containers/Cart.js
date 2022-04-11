@@ -4,6 +4,7 @@ const CartContainer = styled.div`
     background-color: white;
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     position: absolute;
     width: 325px;
     height: 540px;
@@ -16,6 +17,10 @@ const CartContainer = styled.div`
         line-height: 160%;
         text-align: right;
         color: #1D1F22;
+
+        span{
+            font-weight: normal;
+        }
     }
 
 `;

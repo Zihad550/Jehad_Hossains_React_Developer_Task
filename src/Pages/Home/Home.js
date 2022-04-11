@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Container from '../../Components/Styles/Containers/Container';
 import ProductsContainer from '../../Components/Styles/Containers/ProductsContainer';
 import Title from '../../Components/Styles/Tags/Title';
+import SelectedProductsContext from '../../Contexts/SelectedProductsContext';
 import { client } from '../../index';
 import Header from '../Header/Header';
 import Product from '../Product/Product';
@@ -74,10 +75,10 @@ export default class Home extends Component {
       return <h2>Page loading</h2>;
     }
     return (
-      <>
+      <SelectedProductsContext.Provider value={{ cartProducts, currency }}>
 
         {/* header */}
-        <Header cartProducts={cartProducts} handleCategory={this.handleCategory} handleCurrency={this.handleCurrency} />
+        <Header cartProducts={cartProducts} handleCategory={this.handleCategory} handleCurrency={this.handleCurrency} currency={currency} />
 
         <Container>
 
@@ -97,7 +98,7 @@ export default class Home extends Component {
 
         </Container>
 
-      </>
+      </SelectedProductsContext.Provider>
     );
   }
 }

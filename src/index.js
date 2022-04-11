@@ -1,9 +1,8 @@
 import {
-  ApolloClient,
-  ApolloProvider, InMemoryCache
+  ApolloClient, InMemoryCache
 } from '@apollo/client';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
@@ -12,25 +11,8 @@ export const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-/* client
-  .query({
-    query: gql`
-    {
-      categories{
-        name
-      }
-    }
-    `
-  })
-  .then((result) => console.log(result)); */
-
-ReactDOM.render(
-  <React.StrictMode>
-    <ApolloProvider client={client}>
-      <App />
-    </ApolloProvider>
-  </React.StrictMode>,
-  document.getElementById('root'),
-);
+const container = document.getElementById('root');
+const root = createRoot(container);
+root.render(<App tab="home" />);
 
 reportWebVitals();
