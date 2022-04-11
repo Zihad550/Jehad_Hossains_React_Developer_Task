@@ -1,9 +1,14 @@
 import styled from 'styled-components';
 
 const HeaderContainer = styled.div`
-    /* height: 80px; */
-    display: block;
-    margin: 20px 0;
+    height: 80px;
+    /* padding: 80px 0px; */
+
+    div{
+        display:flex;
+    justify-content: space-between;
+    align-items: center;
+    }
 `;
 
 export const Features = styled.div`
@@ -21,12 +26,6 @@ export const Currency = styled.p`
         svg{
             margin-left: 5px;
         }
-`;
-
-export const HeaderWrapper = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
 `;
 
 export default HeaderContainer;

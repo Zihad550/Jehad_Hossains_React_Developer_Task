@@ -74,25 +74,30 @@ export default class Home extends Component {
       return <h2>Page loading</h2>;
     }
     return (
-      <Container>
+      <>
+
         {/* header */}
         <Header cartProducts={cartProducts} handleCategory={this.handleCategory} handleCurrency={this.handleCurrency} />
 
-        {/* title */}
-        <Title>
-          {category}
-        </Title>
+        <Container>
 
-        {/* main */}
-        <ProductsContainer>
-          {
+          {/* title */}
+          <Title>
+            {category}
+          </Title>
+
+          {/* main */}
+          <ProductsContainer>
+            {
           products.map((product) => (
             <Product product={product} key={product.id} handleAddToCart={this.handleAddToCart} currency={currency} />
           ))
         }
-        </ProductsContainer>
+          </ProductsContainer>
 
-      </Container>
+        </Container>
+
+      </>
     );
   }
 }

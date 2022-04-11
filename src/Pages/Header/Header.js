@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../assets/logo/logo.svg';
 import Cart from '../../Components/CartIcon';
-import HeaderContainer, { Features, HeaderWrapper } from '../../Components/Styles/Containers/HeaderContainer';
+import HeaderContainer, { Features } from '../../Components/Styles/Containers/HeaderContainer';
 import Anchor from '../../Components/Styles/Tags/Anchor';
 import Select from '../../Components/Styles/Tags/Select';
 import { client } from '../../index';
@@ -58,7 +58,7 @@ class Header extends React.Component {
     }
     return (
       <HeaderContainer>
-        <HeaderWrapper>
+        <div>
           {/* navs */}
           <nav>
             {
@@ -96,8 +96,8 @@ class Header extends React.Component {
 
             </div>
           </Features>
+        </div>
 
-        </HeaderWrapper>
       </HeaderContainer>
     );
   }
