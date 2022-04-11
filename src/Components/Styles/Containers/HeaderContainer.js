@@ -1,10 +1,9 @@
 import styled from 'styled-components';
 
 const HeaderContainer = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    
+    /* height: 80px; */
+    display: block;
+    margin: 20px 0;
 `;
 
 export const Features = styled.div`
@@ -22,6 +21,12 @@ export const Currency = styled.p`
         svg{
             margin-left: 5px;
         }
+`;
+
+export const HeaderWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 `;
 
 export default HeaderContainer;

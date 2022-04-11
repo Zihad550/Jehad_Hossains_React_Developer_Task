@@ -70,7 +70,6 @@ export default class Home extends Component {
     const {
       category, productsLoading, products, currency, cartProducts
     } = this.state;
-    console.log(cartProducts);
     if (productsLoading) {
       return <h2>Page loading</h2>;
     }
