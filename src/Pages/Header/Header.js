@@ -57,48 +57,50 @@ class Header extends React.Component {
       return <h2>Data loading</h2>;
     }
     return (
-      <HeaderContainer>
-        <div>
-          {/* navs */}
-          <nav>
-            {
+      <>
+        <HeaderContainer>
+          <div>
+            {/* navs */}
+            <nav>
+              {
               this.navs.map((nav) => (
                 <Anchor onClick={() => handleCategory(nav.name)} as={Link} key={nav.id} to={nav.link}>
                   {nav.name}
                 </Anchor>
               ))
           }
-          </nav>
-          {/* logo */}
-          <div>
-            <img src={logo} alt="" />
-          </div>
+            </nav>
+            {/* logo */}
+            <div>
+              <img src={logo} alt="" />
+            </div>
 
-          {/* features */}
-          <Features>
-            {/* currency */}
-            <Select onChange={(e) => handleCurrency(e.target.value)}>
-              {
+            {/* features */}
+            <Features>
+              {/* currency */}
+              <Select onChange={(e) => handleCurrency(e.target.value)}>
+                {
                 currencies.map((currency) => (
                   <option key={currency.label} value={currency.label}>{currency.symbol}</option>
                 ))
               }
-            </Select>
+              </Select>
 
-            {/* shopping cart */}
-            <div>
-              <button type="button" onClick={this.handleShowCart}>
-                <Cart color="black" width="20px" />
-              </button>
-              {
+              {/* shopping cart */}
+              <div>
+                <button type="button" onClick={this.handleShowCart}>
+                  <Cart color="black" width="20px" />
+                </button>
+
+              </div>
+            </Features>
+          </div>
+
+        </HeaderContainer>
+        {
               showCart && <ShoppingCart cartProducts={cartProducts} />
             }
-
-            </div>
-          </Features>
-        </div>
-
-      </HeaderContainer>
+      </>
     );
   }
 }

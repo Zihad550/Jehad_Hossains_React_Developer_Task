@@ -7,7 +7,7 @@ const CartContainer = styled.div`
     position: absolute;
     width: 325px;
     height: 540px;
-    top: 10%;
+    top: 0%;
     right: 5.5%;
     padding: 16px;
     h4{
@@ -22,8 +22,8 @@ const CartContainer = styled.div`
 
 export const CartBackground = styled.div`
     position: absolute;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     background: rgba(57, 55, 72, 0.22);    display: flex;
     justify-content: center;
     align-items: center;

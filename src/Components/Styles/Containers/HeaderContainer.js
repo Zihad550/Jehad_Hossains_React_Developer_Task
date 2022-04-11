@@ -2,13 +2,15 @@ import styled from 'styled-components';
 
 const HeaderContainer = styled.div`
     height: 80px;
-    /* padding: 80px 0px; */
-
+    width: 90%;
+    margin: 0 auto;
     div{
-        display:flex;
+    display:flex;
     justify-content: space-between;
     align-items: center;
+    height: 100%;
     }
+    
 `;
 
 export const Features = styled.div`
