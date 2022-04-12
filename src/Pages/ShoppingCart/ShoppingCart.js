@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
-import CartContainer, { CartBackground } from '../../Components/Styles/Containers/Cart';
+import CartContainer, {
+  CartBackground, CartProduct, CartProductImgWrp, Quantity
+} from '../../Components/Styles/Containers/Cart';
 import SelectedProductsContext from '../../Contexts/SelectedProductsContext';
 
 class ShoppingCart extends Component {
   render() {
-    const { cartProducts, currency } = this.context;
+    const { cartProducts, handleAddToCart } = this.context;
 
-    /*  const {
-      gallery, id, inStock, name, prices
-    } = cartProducts; */
-    console.log(cartProducts);
     return (
       <CartBackground>
         <CartContainer>
@@ -22,13 +20,32 @@ class ShoppingCart extends Component {
               items
             </span>
           </h4>
-
           {
             cartProducts.map((product) => (
-              <div key={product.id}>
-                <h4>{product.name}</h4>
-                <img src={product.gallery[0]} alt="" />
-              </div>
+              <CartProduct key={product.id}>
+                {/* name & price & size btn */}
+                <div>
+                  <h4>{product.name}</h4>
+
+                </div>
+
+                {/* image */}
+                <CartProductImgWrp>
+                  {/* quantity btn */}
+                  <Quantity>
+                    <button onClick={() => handleAddToCart(product.id)} type="button">
+                      +
+                    </button>
+                    <p>
+                      {product.quantity}
+                    </p>
+                    <button type="button">
+                      -
+                    </button>
+                  </Quantity>
+                  <img src={product.src} alt="" />
+                </CartProductImgWrp>
+              </CartProduct>
             ))
           }
         </CartContainer>

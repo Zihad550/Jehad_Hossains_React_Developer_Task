@@ -2,12 +2,28 @@ import React from 'react';
 import Cart from '../../Components/CartIcon';
 import Card, { CardBody, CardHeader } from '../../Components/Styles/Containers/Card';
 
-function Product({ product, currency: changedCurrency, handleAddToCart }) {
+function Product({
+  product, currency: changedCurrency, handleAddToCart, cartProducts
+}) {
   const {
-    name, inStock, prices, gallery
+    name, inStock, prices, gallery, id
   } = product;
   const price = prices.find((price) => price.currency.label === changedCurrency);
   const { amount, currency } = price;
+
+  // handle product adding to cart
+  /*  const handleProductAdd = (id, name, gallery, amount, currency) => {
+    const exists = cartProducts.find((product) => product.id === id);
+    if (exists !== undefined) {
+      exists.quantity += 1;
+    } else {
+      const newProduct = {
+        name, src: gallery[0], amount, currency, quantity: 1, id
+      };
+      handleAddToCart(newProduct);
+    }
+  }; */
+
   return (
     <Card>
 
@@ -24,7 +40,10 @@ function Product({ product, currency: changedCurrency, handleAddToCart }) {
 
       <CardBody>
         <div>
-          <button onClick={() => handleAddToCart(product)} type="button">
+          <button
+            onClick={() => handleAddToCart(id, name, gallery, amount, currency)}
+            type="button"
+          >
             <Cart width="20px" color="white" />
           </button>
         </div>

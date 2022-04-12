@@ -23,6 +23,8 @@ const CartContainer = styled.div`
         }
     }
 
+
+
 `;
 
 export const CartBackground = styled.div`
@@ -34,6 +36,36 @@ export const CartBackground = styled.div`
     align-items: center;
     z-index: 99;
     left: 0%;
+`;
+
+export const CartProduct = styled.div`
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    height: 140px;
+    img{
+        width: 100%;
+        height: auto;
+    }
+
+    button{
+        border: 1px solid #1D1F22;
+        background: 0;
+        padding: 8px;
+    }
+
+   
+`;
+
+export const Quantity = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+`;
+
+export const CartProductImgWrp = styled.div`
+    display: flex;
+    width: 100%;
+    overflow: hidden;
 `;
 
 export default CartContainer;

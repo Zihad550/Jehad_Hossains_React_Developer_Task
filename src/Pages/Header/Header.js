@@ -44,7 +44,6 @@ class Header extends React.Component {
   handleShowCart = () => {
     this.setState((state) => ({
       showCart: !state.showCart
-
     }));
   };
 
@@ -66,7 +65,12 @@ class Header extends React.Component {
             <nav>
               {
               this.navs.map((nav) => (
-                <Anchor onClick={() => handleCategory(nav.name)} as={Link} key={nav.id} to={nav.link}>
+                <Anchor
+                  onClick={() => handleCategory(nav.name)}
+                  as={Link}
+                  key={nav.id}
+                  to={nav.link}
+                >
                   {nav.name}
                 </Anchor>
               ))

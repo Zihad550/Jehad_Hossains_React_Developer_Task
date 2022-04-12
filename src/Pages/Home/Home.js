@@ -33,11 +33,25 @@ export default class Home extends Component {
   };
 
   // handle add to cart
-  handleAddToCart = (product) => {
-    // this.setState({ cartProducts: product });
+  /* handleAddToCart = (product) => {
     this.setState((prevState) => ({
       cartProducts: [...prevState.cartProducts, product]
     }));
+  }; */
+
+  // handle product adding to cart
+  handleAddToCart = (id, name, gallery, amount, currency) => {
+    const exists = this.state.cartProducts.find((product) => product.id === id);
+    if (exists !== undefined) {
+      exists.quantity += 1;
+    } else {
+      const newProduct = {
+        name, src: gallery[0], amount, currency, quantity: 1, id
+      };
+      this.setState((prevState) => ({
+        cartProducts: [...prevState.cartProducts, newProduct]
+      }));
+    }
   };
 
   // get products by category
@@ -75,10 +89,15 @@ export default class Home extends Component {
       return <h2>Page loading</h2>;
     }
     return (
-      <SelectedProductsContext.Provider value={{ cartProducts, currency }}>
+      <SelectedProductsContext.Provider value={{ cartProducts, handleAddToCart: this.handleAddToCart }}>
 
         {/* header */}
-        <Header cartProducts={cartProducts} handleCategory={this.handleCategory} handleCurrency={this.handleCurrency} currency={currency} />
+        <Header
+          cartProducts={cartProducts}
+          handleCategory={this.handleCategory}
+          handleCurrency={this.handleCurrency}
+          currency={currency}
+        />
 
         <Container>
 
@@ -91,7 +110,13 @@ export default class Home extends Component {
           <ProductsContainer>
             {
           products.map((product) => (
-            <Product product={product} key={product.id} handleAddToCart={this.handleAddToCart} currency={currency} />
+            <Product
+              product={product}
+              key={product.id}
+              handleAddToCart={this.handleAddToCart}
+              currency={currency}
+              cartProducts={cartProducts}
+            />
           ))
         }
           </ProductsContainer>
