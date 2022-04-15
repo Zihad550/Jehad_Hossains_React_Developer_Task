@@ -50,7 +50,7 @@ class Header extends React.Component {
   render() {
     // destructured props
     const {
-      handleCategory, handleCurrency, cartProducts, currency
+      handleCategory, handleCurrency, cartProducts, currency, handleAddToCart
     } = this.props;
     // destructured states
     const { currencies, loading, showCart } = this.state;
@@ -104,8 +104,8 @@ class Header extends React.Component {
 
         </HeaderContainer>
         {
-              showCart && <ShoppingCart />
-            }
+              showCart && <ShoppingCart handleAddToCart={handleAddToCart} cartProducts={cartProducts} />
+        }
       </>
     );
   }

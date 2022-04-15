@@ -8,6 +8,7 @@ const CartContainer = styled.div`
     position: absolute;
     width: 325px;
     height: 540px;
+    overflow-y: scroll;
     top: 0%;
     right: 5.5%;
     padding: 16px;
@@ -23,8 +24,25 @@ const CartContainer = styled.div`
         }
     }
 
+    /* scrollbar css */
+    ::-webkit-scrollbar {
+  width: 5px;
+}
 
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
 `;
 
 export const CartBackground = styled.div`
@@ -42,6 +60,8 @@ export const CartProduct = styled.div`
     display:grid;
     grid-template-columns: repeat(2, 1fr);
     height: 140px;
+    margin-top: 41px;
+
     img{
         width: 100%;
         height: auto;
@@ -51,21 +71,46 @@ export const CartProduct = styled.div`
         border: 1px solid #1D1F22;
         background: 0;
         padding: 8px;
+        cursor: pointer;
     }
 
-   
+    div:first-child{
+        
+    }
 `;
 
 export const Quantity = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    margin-right: 5px;
 `;
 
 export const CartProductImgWrp = styled.div`
     display: flex;
     width: 100%;
     overflow: hidden;
+`;
+
+export const CartBtn = styled.button`
+    cursor: pointer;
+`;
+
+export const CartBody = styled.div`
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    text-align: left;
+    
+    /* buttons */
+   div{
+    button:first-child{
+        margin-right: 15px;
+    }
+   }
+    
 `;
 
 export default CartContainer;

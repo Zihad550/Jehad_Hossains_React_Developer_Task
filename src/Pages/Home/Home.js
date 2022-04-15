@@ -15,6 +15,7 @@ export default class Home extends Component {
     productsLoading: true,
     currency: 'USD',
     cartProducts: [],
+    shouldUpdate: true
   };
 
   // call get products when component mounts
@@ -32,18 +33,18 @@ export default class Home extends Component {
     this.setState({ currency });
   };
 
-  // handle add to cart
-  /* handleAddToCart = (product) => {
-    this.setState((prevState) => ({
-      cartProducts: [...prevState.cartProducts, product]
-    }));
-  }; */
-
   // handle product adding to cart
-  handleAddToCart = (id, name, gallery, amount, currency) => {
+  handleAddToCart = (product) => {
+    const {
+      id, name, gallery, amount, currency, option
+    } = product;
+    console.log(option);
     const exists = this.state.cartProducts.find((product) => product.id === id);
-    if (exists !== undefined) {
+    if (exists !== undefined && !option) {
       exists.quantity += 1;
+      this.setState({ shouldUpdate: false });
+    } else if (option === 'decrease') {
+      this.handleRemoveFromCart(exists, id);
     } else {
       const newProduct = {
         name, src: gallery[0], amount, currency, quantity: 1, id
@@ -51,6 +52,19 @@ export default class Home extends Component {
       this.setState((prevState) => ({
         cartProducts: [...prevState.cartProducts, newProduct]
       }));
+    }
+  };
+
+  // handle remove from cart
+  handleRemoveFromCart = (exists, id) => {
+    if (exists.quantity === 1) {
+      const existingProducts = this.state.cartProducts.filter((product) => product.id !== id);
+      this.setState((prevState) => (
+        { cartProducts: [...existingProducts] }
+      ));
+    } else {
+      exists.quantity -= 1;
+      this.setState({ shouldUpdate: false });
     }
   };
 
@@ -97,6 +111,7 @@ export default class Home extends Component {
           handleCategory={this.handleCategory}
           handleCurrency={this.handleCurrency}
           currency={currency}
+          handleAddToCart={this.handleAddToCart}
         />
 
         <Container>

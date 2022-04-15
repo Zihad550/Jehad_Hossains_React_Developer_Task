@@ -11,22 +11,8 @@ function Product({
   const price = prices.find((price) => price.currency.label === changedCurrency);
   const { amount, currency } = price;
 
-  // handle product adding to cart
-  /*  const handleProductAdd = (id, name, gallery, amount, currency) => {
-    const exists = cartProducts.find((product) => product.id === id);
-    if (exists !== undefined) {
-      exists.quantity += 1;
-    } else {
-      const newProduct = {
-        name, src: gallery[0], amount, currency, quantity: 1, id
-      };
-      handleAddToCart(newProduct);
-    }
-  }; */
-
   return (
     <Card>
-
       <CardHeader>
         <img style={{ width: '100%' }} src={gallery[0]} alt="" />
         {
@@ -37,11 +23,12 @@ function Product({
           )
         }
       </CardHeader>
-
       <CardBody>
         <div>
           <button
-            onClick={() => handleAddToCart(id, name, gallery, amount, currency)}
+            onClick={() => handleAddToCart({
+              id, name, gallery, amount, currency
+            })}
             type="button"
           >
             <Cart width="20px" color="white" />
