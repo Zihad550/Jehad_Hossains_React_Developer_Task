@@ -87,7 +87,7 @@ class Header extends React.Component {
               <Select onChange={(e) => handleCurrency(e.target.value)}>
                 {
                 currencies.map((currency) => (
-                  <option key={currency.label} value={currency.label}>{currency.symbol}</option>
+                  <option key={currency.symbol} value={currency.symbol}>{currency.symbol}</option>
                 ))
               }
               </Select>
@@ -104,7 +104,7 @@ class Header extends React.Component {
 
         </HeaderContainer>
         {
-              showCart && <ShoppingCart handleAddToCart={handleAddToCart} cartProducts={cartProducts} />
+              showCart && <ShoppingCart handleAddToCart={handleAddToCart} cartProducts={cartProducts} currency={currency} />
         }
       </>
     );

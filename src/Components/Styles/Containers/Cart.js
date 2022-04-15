@@ -113,4 +113,58 @@ export const CartBody = styled.div`
     
 `;
 
+export const CartTotal = styled.div`
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    flex-direction: column;
+    margin-top: auto;
+   
+
+    p{
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 18px;
+    color: #1D1F22;
+    margin: 42px 10px 35px 0px;
+
+    span{
+        font-size: 1.3em;
+        margin-right: 1px;
+    }
+
+    }
+
+    div{
+        display: flex;
+        justify-content: space-between;
+    }
+        button{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 16px 32px;
+    background: #FFFFFF;
+    border: 1px solid #1D1F22;
+    box-sizing: border-box;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    text-transform: uppercase;
+    cursor: pointer;
+    }
+
+    button:last-child{
+        background: #5ECE7B;
+        color: #FFFFFF;
+    }
+    
+
+    
+
+`;
+
 export default CartContainer;

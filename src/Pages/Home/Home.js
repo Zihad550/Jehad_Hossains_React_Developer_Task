@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Container from '../../Components/Styles/Containers/Container';
 import ProductsContainer from '../../Components/Styles/Containers/ProductsContainer';
 import Title from '../../Components/Styles/Tags/Title';
+import Toast from '../../Components/Toast';
 import SelectedProductsContext from '../../Contexts/SelectedProductsContext';
 import { client } from '../../index';
 import Header from '../Header/Header';
@@ -13,15 +14,22 @@ export default class Home extends Component {
     category: 'all',
     products: [],
     productsLoading: true,
-    currency: 'USD',
+    currency: '$',
     cartProducts: [],
-    shouldUpdate: true
+    shouldUpdate: true,
+    showToast: false,
   };
 
   // call get products when component mounts
   componentDidMount() {
     this.getProducts();
+    // handle toast
   }
+
+  handleToast = () => {
+    console.log('inside');
+    this.setState({ showToast: false });
+  };
 
   // handle category
   handleCategory = (category) => {
@@ -36,21 +44,29 @@ export default class Home extends Component {
   // handle product adding to cart
   handleAddToCart = (product) => {
     const {
-      id, name, gallery, amount, currency, option
+      id, option, inStock
     } = product;
-    console.log(option);
+
+    this.setState({ showToast: false });
+
+    if (!inStock) {
+      this.setState({ showToast: true });
+    }
+
     const exists = this.state.cartProducts.find((product) => product.id === id);
+
+    // if the product exists then its quantity will increase
     if (exists !== undefined && !option) {
       exists.quantity += 1;
+      exists.productTotal += exists.amount;
       this.setState({ shouldUpdate: false });
+
+    // decrease the product quantity
     } else if (option === 'decrease') {
       this.handleRemoveFromCart(exists, id);
     } else {
-      const newProduct = {
-        name, src: gallery[0], amount, currency, quantity: 1, id
-      };
       this.setState((prevState) => ({
-        cartProducts: [...prevState.cartProducts, newProduct]
+        cartProducts: [...prevState.cartProducts, product]
       }));
     }
   };
@@ -64,6 +80,7 @@ export default class Home extends Component {
       ));
     } else {
       exists.quantity -= 1;
+      exists.productTotal += exists.amount;
       this.setState({ shouldUpdate: false });
     }
   };
@@ -97,7 +114,7 @@ export default class Home extends Component {
 
   render() {
     const {
-      category, productsLoading, products, currency, cartProducts
+      category, productsLoading, products, currency, cartProducts, showToast
     } = this.state;
     if (productsLoading) {
       return <h2>Page loading</h2>;
@@ -115,6 +132,11 @@ export default class Home extends Component {
         />
 
         <Container>
+
+          {/* toast */}
+          {
+            showToast && <Toast message="Product not available" onClick={this.handleToast} variant="" type="button" />
+          }
 
           {/* title */}
           <Title>

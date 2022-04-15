@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import CartContainer, {
-  CartBackground, CartBody, CartBtn, CartProduct, CartProductImgWrp, Quantity
+  CartBackground, CartBody, CartBtn, CartProduct, CartProductImgWrp, CartTotal, Quantity
 } from '../../Components/Styles/Containers/Cart';
 import SelectedProductsContext from '../../Contexts/SelectedProductsContext';
 
 class ShoppingCart extends Component {
   calculateTotal = () => {
-    const total = this.props.cartProducts.map((product) => product.amount);
+    const total = this.props.cartProducts.map((product) => product.productTotal);
 
-    console.log(total);
     if (total.length !== 0) {
       return total?.reduce((prev, next) => prev + next).toFixed(2);
     }
@@ -16,8 +15,7 @@ class ShoppingCart extends Component {
   };
 
   render() {
-    const { cartProducts, handleAddToCart } = this.props;
-    console.log(cartProducts);
+    const { cartProducts, handleAddToCart, currency } = this.props;
     return (
       <CartBackground>
         <CartContainer>
@@ -74,14 +72,25 @@ class ShoppingCart extends Component {
           }
 
           {/* total & view bag & checkout  */}
-          <div>
-            <p>Total</p>
-            <p>
-              {
+          <CartTotal>
+            <div>
+              <p>Total</p>
+              <p>
+                <span>{currency}</span>
+                {
                   this.calculateTotal()
                 }
-            </p>
-          </div>
+              </p>
+            </div>
+            <div>
+              <button type="button">
+                View Bag
+              </button>
+              <button type="button">
+                Check Out
+              </button>
+            </div>
+          </CartTotal>
         </CartContainer>
       </CartBackground>
     );
