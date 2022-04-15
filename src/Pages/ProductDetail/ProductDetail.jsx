@@ -1,6 +1,11 @@
 import { gql } from "@apollo/client";
 import React, { Component } from "react";
 import { useParams } from "react-router-dom";
+import Container from "../../Components/Styles/Containers/Container";
+import DetailContainer, {
+  DetailImgs,
+  Details,
+} from "../../Components/Styles/Containers/Detail";
 import { client } from "../../index";
 
 function withParams(Component) {
@@ -12,7 +17,7 @@ function withParams(Component) {
 class ProductDetail extends Component {
   state = {
     product: {},
-    isLoading: false,
+    isLoading: true,
   };
 
   componentDidMount() {
@@ -20,20 +25,42 @@ class ProductDetail extends Component {
     this.getProduct(id);
   }
 
-  getProduct = (id) => {
+  getProduct = (id = "apple-imac-2021") => {
     client
       .query({
         query: gql`
-          {
-            product(id:${id}) {
+        {
+          product(id: ${JSON.stringify(id)}){
+            name
+            gallery
+            brand
+            inStock
+            description
+            category
+            brand
+            attributes{
+              id
               name
-              gallery
-              brand
+              type
+              items{
+                displayValue
+                value
+                id
+              }
+            }
+            prices{
+              currency{
+                label
+                symbol
+              }
+              amount
             }
           }
+        }
         `,
       })
       .then((res) => {
+        console.log(res.loading);
         this.setState({
           product: res.data.product,
           isLoading: res.loading,
@@ -43,7 +70,31 @@ class ProductDetail extends Component {
 
   render() {
     const { product, isLoading } = this.state;
-    return <div>{product.name}</div>;
+    console.log(isLoading);
+    const { name } = product;
+
+    if (isLoading) {
+      return <h2>Product Loading</h2>;
+    }
+    return (
+      <Container>
+        <DetailContainer>
+          <DetailImgs>
+            <div>
+              {product.gallery.map((img) => (
+                <img src={img} key={Math.random() * 1010} alt="product" />
+              ))}
+            </div>
+            <div>
+              <img src={product.gallery[0]} alt="" />
+            </div>
+          </DetailImgs>
+          <Details>
+            <h4>{name}</h4>
+          </Details>
+        </DetailContainer>
+      </Container>
+    );
   }
 }
 

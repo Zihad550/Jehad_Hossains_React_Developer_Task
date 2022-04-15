@@ -23,11 +23,11 @@ class Product extends Component {
     const { amount, currency } = price;
 
     return (
-      <Card onClick={this.handleNavigate}>
+      <Card>
         {
           this.state.navigate && <Navigate to={`/detail/${id}`} />
         }
-        <CardHeader>
+        <CardHeader onClick={this.handleNavigate}>
           <img style={{ width: '100%' }} src={gallery[0]} alt="" />
           {
           inStock || (

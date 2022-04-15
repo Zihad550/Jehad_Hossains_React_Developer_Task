@@ -22,8 +22,7 @@ export default class Home extends Component {
 
   // call get products when component mounts
   componentDidMount() {
-    this.getProducts();
-    // handle toast
+    this.getProducts(this.state.category);
   }
 
   handleToast = () => {
@@ -86,11 +85,11 @@ export default class Home extends Component {
   };
 
   // get products by category
-  getProducts = () => {
+  getProducts = (title = 'all') => {
     client.query({
       query: gql`
       {
-        category(input: {title: ${JSON.stringify(this.state.category)}}){
+        category(input: {title: ${JSON.stringify(title)}}){
           products{
             id
             name

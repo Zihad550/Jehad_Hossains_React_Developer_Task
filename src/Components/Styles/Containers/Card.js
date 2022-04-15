@@ -46,7 +46,8 @@ export const CardBody = styled.div`
         display: flex;
         position: relative;
         flex-direction: column;
-        div{
+
+    div{
             background-color: #5ECE7B;
             width: 35px;
             height: 35px;
@@ -58,12 +59,15 @@ export const CardBody = styled.div`
             position: absolute;
             right: 7%;
             bottom: 90%;
-        &:hover{
+    &:hover{
             background-color: black;
             cursor: pointer;
         }
         }
-        h4 {
+    
+   
+
+    h4 {
         font-weight: 300;
         font-size: 18px;
         line-height: 160%;
@@ -74,7 +78,6 @@ export const CardBody = styled.div`
     }
 
     p{
-        
         font-weight: 500;
         font-size: 18px;
         line-height: 160%;
