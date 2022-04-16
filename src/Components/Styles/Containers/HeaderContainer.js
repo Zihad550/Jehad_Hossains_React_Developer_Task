@@ -30,4 +30,8 @@ export const Currency = styled.p`
         }
 `;
 
+export const Bag = styled.div`
+    cursor: pointer;
+`;
+
 export default HeaderContainer;

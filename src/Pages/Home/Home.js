@@ -13,7 +13,6 @@ export default class Home extends Component {
     category: 'all',
     products: [],
     productsLoading: true,
-    cartProducts: [],
     shouldUpdate: true,
     showToast: false,
   };
@@ -31,50 +30,6 @@ export default class Home extends Component {
   // handle category
   handleCategory = (category) => {
     this.setState({ category });
-  };
-
-  // handle product adding to cart
-  handleAddToCart = (product) => {
-    const {
-      id, option, inStock
-    } = product;
-
-    this.setState({ showToast: false });
-
-    if (!inStock) {
-      this.setState({ showToast: true });
-    }
-
-    const exists = this.state.cartProducts.find((product) => product.id === id);
-
-    // if the product exists then its quantity will increase
-    if (exists !== undefined && !option) {
-      exists.quantity += 1;
-      exists.productTotal += exists.amount;
-      this.setState({ shouldUpdate: false });
-
-    // decrease the product quantity
-    } else if (option === 'decrease') {
-      this.handleRemoveFromCart(exists, id);
-    } else {
-      this.setState((prevState) => ({
-        cartProducts: [...prevState.cartProducts, product]
-      }));
-    }
-  };
-
-  // handle remove from cart
-  handleRemoveFromCart = (exists, id) => {
-    if (exists.quantity === 1) {
-      const existingProducts = this.state.cartProducts.filter((product) => product.id !== id);
-      this.setState((prevState) => (
-        { cartProducts: [...existingProducts] }
-      ));
-    } else {
-      exists.quantity -= 1;
-      exists.productTotal += exists.amount;
-      this.setState({ shouldUpdate: false });
-    }
   };
 
   // get products by category
@@ -106,9 +61,11 @@ export default class Home extends Component {
 
   render() {
     const {
-      category, productsLoading, products, cartProducts, showToast
+      category, productsLoading, products, showToast
     } = this.state;
-    const { handleCurrency, currency } = this.props;
+    const {
+      handleCurrency, currency, cartProducts, handleAddToCart
+    } = this.props;
     if (productsLoading) {
       return <h2>Page loading</h2>;
     }
@@ -121,7 +78,7 @@ export default class Home extends Component {
           handleCategory={this.handleCategory}
           handleCurrency={handleCurrency}
           currency={currency}
-          handleAddToCart={this.handleAddToCart}
+          handleAddToCart={handleAddToCart}
         />
 
         <Container>
@@ -143,7 +100,7 @@ export default class Home extends Component {
             <Product
               product={product}
               key={product.id}
-              handleAddToCart={this.handleAddToCart}
+              handleAddToCart={handleAddToCart}
               currency={currency}
               cartProducts={cartProducts}
             />

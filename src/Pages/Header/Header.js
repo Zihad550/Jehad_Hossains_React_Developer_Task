@@ -1,9 +1,9 @@
 import { gql } from '@apollo/client';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import logo from '../../assets/logo/logo.svg';
 import Cart from '../../Components/CartIcon';
-import HeaderContainer, { Features } from '../../Components/Styles/Containers/HeaderContainer';
+import HeaderContainer, { Bag, Features } from '../../Components/Styles/Containers/HeaderContainer';
 import Anchor from '../../Components/Styles/Tags/Anchor';
 import Select from '../../Components/Styles/Tags/Select';
 import { client } from '../../index';
@@ -14,6 +14,7 @@ class Header extends React.Component {
     currencies: [],
     loading: true,
     showCart: false,
+    navigate: false,
   };
 
   navs = [
@@ -47,6 +48,11 @@ class Header extends React.Component {
     }));
   };
 
+  handleAddToCategory = (name) => {
+    this.setState({ navigate: true });
+    this.props.handleCategory(name);
+  };
+
   render() {
     // destructured props
     const {
@@ -59,6 +65,9 @@ class Header extends React.Component {
     }
     return (
       <>
+        {
+        this.state.navigate && <Navigate to="/" />
+      }
         <HeaderContainer>
           <div>
             {/* navs */}
@@ -66,10 +75,8 @@ class Header extends React.Component {
               {
               this.navs.map((nav) => (
                 <Anchor
-                  onClick={() => handleCategory(nav.name)}
-                  as={Link}
-                  key={nav.id}
-                  to={nav.link}
+                  onClick={() => this.handleAddToCategory(nav.name)}
+
                 >
                   {nav.name}
                 </Anchor>
@@ -77,9 +84,9 @@ class Header extends React.Component {
           }
             </nav>
             {/* logo */}
-            <div>
+            <Bag as={Link} to="/bag">
               <img src={logo} alt="" />
-            </div>
+            </Bag>
 
             {/* features */}
             <Features>
@@ -97,7 +104,6 @@ class Header extends React.Component {
                 <button type="button" onClick={this.handleShowCart}>
                   <Cart color="black" width="20px" />
                 </button>
-
               </div>
             </Features>
           </div>

@@ -57,8 +57,8 @@ export const CartBackground = styled.div`
 `;
 
 export const CartProduct = styled.div`
-    display:grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    justify-content: space-between;
     height: 140px;
     margin-top: 41px;
 
@@ -88,7 +88,7 @@ export const Quantity = styled.div`
 
 export const CartProductImgWrp = styled.div`
     display: flex;
-    width: 100%;
+    width: 200px;
     overflow: hidden;
 `;
 
