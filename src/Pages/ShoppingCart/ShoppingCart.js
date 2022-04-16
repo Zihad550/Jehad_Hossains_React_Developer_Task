@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import CartContainer, {
   CartBackground, CartBody, CartBtn, CartProduct, CartProductImgWrp, CartTotal, Quantity
 } from '../../Components/Styles/Containers/Cart';
-import SelectedProductsContext from '../../Contexts/SelectedProductsContext';
 
 class ShoppingCart extends Component {
   calculateTotal = () => {
@@ -97,5 +96,4 @@ class ShoppingCart extends Component {
   }
 }
 
-ShoppingCart.contextType = SelectedProductsContext;
 export default ShoppingCart;

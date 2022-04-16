@@ -4,7 +4,6 @@ import Container from '../../Components/Styles/Containers/Container';
 import ProductsContainer from '../../Components/Styles/Containers/ProductsContainer';
 import Title from '../../Components/Styles/Tags/Title';
 import Toast from '../../Components/Toast';
-import SelectedProductsContext from '../../Contexts/SelectedProductsContext';
 import { client } from '../../index';
 import Header from '../Header/Header';
 import Product from '../Product/Product';
@@ -14,7 +13,6 @@ export default class Home extends Component {
     category: 'all',
     products: [],
     productsLoading: true,
-    currency: '$',
     cartProducts: [],
     shouldUpdate: true,
     showToast: false,
@@ -33,11 +31,6 @@ export default class Home extends Component {
   // handle category
   handleCategory = (category) => {
     this.setState({ category });
-  };
-
-  // handle currency
-  handleCurrency = (currency) => {
-    this.setState({ currency });
   };
 
   // handle product adding to cart
@@ -113,19 +106,20 @@ export default class Home extends Component {
 
   render() {
     const {
-      category, productsLoading, products, currency, cartProducts, showToast
+      category, productsLoading, products, cartProducts, showToast
     } = this.state;
+    const { handleCurrency, currency } = this.props;
     if (productsLoading) {
       return <h2>Page loading</h2>;
     }
     return (
-      <SelectedProductsContext.Provider value={{ cartProducts, handleAddToCart: this.handleAddToCart }}>
+      <>
 
         {/* header */}
         <Header
           cartProducts={cartProducts}
           handleCategory={this.handleCategory}
-          handleCurrency={this.handleCurrency}
+          handleCurrency={handleCurrency}
           currency={currency}
           handleAddToCart={this.handleAddToCart}
         />
@@ -159,7 +153,8 @@ export default class Home extends Component {
 
         </Container>
 
-      </SelectedProductsContext.Provider>
+      </>
+
     );
   }
 }
