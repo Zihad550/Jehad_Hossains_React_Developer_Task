@@ -141,7 +141,7 @@ class ProductDetail extends Component {
                   </SizeBtn>
                 ))} */}
 
-                {
+                {/* {
                   attributes.map((attribute) => (
                     <p>{attribute.name}</p>
                   ))
@@ -150,7 +150,7 @@ class ProductDetail extends Component {
                   attributes.map((attribute) => (
                     <p>{attribute.name}</p>
                   ))
-                }
+                } */}
 
               </Size>
 
