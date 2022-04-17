@@ -1,7 +1,6 @@
 import styled, { keyframes } from "styled-components";
 
 const load5 = keyframes`
-
   0%,
   100% {
     box-shadow: 0em -2.6em 0em 0em #000000, 1.8em -1.8em 0 0em rgba(0,0,0, 0.2), 2.5em 0em 0 0em rgba(0,0,0, 0.2), 1.75em 1.75em 0 0em rgba(0,0,0, 0.2), 0em 2.5em 0 0em rgba(0,0,0, 0.2), -1.8em 1.8em 0 0em rgba(0,0,0, 0.2), -2.6em 0em 0 0em rgba(0,0,0, 0.5), -1.8em -1.8em 0 0em rgba(0,0,0, 0.7);
@@ -29,8 +28,15 @@ const load5 = keyframes`
   }
 `;
 
-const LoaderContainer = styled.div`
-    margin: 100px auto;
+const SpinnerContainer = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+`;
+
+export const SpinnerWrp = styled.div`
+  margin: 100px auto;
   font-size: 25px;
   width: 1em;
   height: 1em;
@@ -41,4 +47,4 @@ const LoaderContainer = styled.div`
   transform: translateZ(0);
 `;
 
-export default LoaderContainer;
+export default SpinnerContainer;

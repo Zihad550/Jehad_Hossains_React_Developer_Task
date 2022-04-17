@@ -1,5 +1,6 @@
 import { gql } from '@apollo/client';
 import React, { Component } from 'react';
+import Spinner from '../../Components/Spinner';
 import Container from '../../Components/Styles/Containers/Container';
 import ProductsContainer from '../../Components/Styles/Containers/ProductsContainer';
 import Title from '../../Components/Styles/Tags/Title';
@@ -66,8 +67,10 @@ export default class Home extends Component {
     const {
       handleCurrency, currency, cartProducts, handleAddToCart
     } = this.props;
+
+    // when product loading
     if (productsLoading) {
-      return <h2>Page loading</h2>;
+      return <Spinner />;
     }
     return (
       <>

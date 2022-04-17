@@ -1,6 +1,7 @@
 import { gql } from "@apollo/client";
 import React, { Component } from "react";
 import { useParams } from "react-router-dom";
+import Spinner from "../../Components/Spinner";
 import Container from "../../Components/Styles/Containers/Container";
 import DetailContainer, {
   AddBtn,
@@ -8,8 +9,7 @@ import DetailContainer, {
   DetailImgs,
   Details,
   Price,
-  Size,
-  SizeBtn
+  Size
 } from "../../Components/Styles/Containers/Detail";
 import { client } from "../../index";
 import Header from "../Header/Header";
@@ -74,6 +74,21 @@ class ProductDetail extends Component {
       });
   };
 
+  // get all the attributes and return each attribute as object
+  // eslint-disable-next-line react/no-unused-class-component-methods
+  /* printAttribute = (attributes) => {
+    if (attributes.length) {
+      return null;
+    }
+
+    for(let i = 0; i < attributes.length; i++){
+      const newAttribute = attribute.map((att) => ({ items: att.items, name: att.name, id: att.id }));
+    }
+
+    const attribute = attributes.map((att) => ({ items: att.items, name: att.name }));
+    return attribute;
+  }; */
+
   render() {
     const { product, isLoading } = this.state;
     const {
@@ -81,15 +96,16 @@ class ProductDetail extends Component {
     } = product;
     const { currency } = this.props;
 
+    // when product loading
     if (isLoading) {
-      return <h2>Product Loading</h2>;
+      return <Spinner />;
     }
+    console.log(attributes);
 
     const price = product.prices.find(
       (price) => price.currency.symbol === currency
     );
-    console.log(price);
-    console.log(product);
+
     return (
       <>
         <Header />
@@ -117,12 +133,25 @@ class ProductDetail extends Component {
 
               {/* product size */}
               <Size>
+
                 <p>Size</p>
-                {attributes[0].items.map((attribute) => (
+                {/* {attributes[0].items.map((attribute) => (
                   <SizeBtn type="button" key={attribute.id}>
                     {attribute.value}
                   </SizeBtn>
-                ))}
+                ))} */}
+
+                {
+                  attributes.map((attribute) => (
+                    <p>{attribute.name}</p>
+                  ))
+                }
+                {
+                  attributes.map((attribute) => (
+                    <p>{attribute.name}</p>
+                  ))
+                }
+
               </Size>
 
               {/* product price */}

@@ -15,12 +15,13 @@ export const DetailImgs = styled.div`
 display: flex;
 flex-basis: 50%;
     div:first-child{
-        width: 180px;
+        width: 300px;
         height: 60vh;
         overflow-y: scroll;
         img{
         width: 100%;
         height: auto;
+        margin-bottom: 20px;
     }
       /* scrollbar css */
       ::-webkit-scrollbar {
@@ -76,16 +77,10 @@ export const Details = styled.div`
     align-items: center;
     color: #1D1F22;
     }
-
-    
-
-    
-
 `;
 
 export const Size = styled.div`
     p{
-
     font-family: 'Roboto Condensed';
     font-style: normal;
     font-weight: 700;
@@ -138,12 +133,12 @@ export const AddBtn = styled.button`
     background: #5ECE7B;
     font-family: 'Raleway';
     border: 0;
-font-style: normal;
-font-weight: 600;
-font-size: 16px;
-line-height: 120%;
-color: #fff;
-text-transform: uppercase;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 120%;
+    color: #fff;
+    text-transform: uppercase;
 `;
 
 export default DetailContainer;

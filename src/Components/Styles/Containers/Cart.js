@@ -62,11 +62,6 @@ export const CartProduct = styled.div`
     height: 140px;
     margin-top: 41px;
 
-    img{
-        width: 100%;
-        height: auto;
-    }
-
     button{
         border: 1px solid #1D1F22;
         background: 0;
@@ -74,9 +69,6 @@ export const CartProduct = styled.div`
         cursor: pointer;
     }
 
-    div:first-child{
-        
-    }
 `;
 
 export const Quantity = styled.div`
@@ -88,8 +80,7 @@ export const Quantity = styled.div`
 
 export const CartProductImgWrp = styled.div`
     display: flex;
-    width: 200px;
-    overflow: hidden;
+    width: 140px;
 `;
 
 export const CartBtn = styled.button`
@@ -97,13 +88,15 @@ export const CartBtn = styled.button`
 `;
 
 export const CartBody = styled.div`
-    margin-right: auto;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: flex-start;
-    text-align: left;
-    
+    /* width: max-content; */
+    /* align-items: flex-start; */
+    width: 130px;
+    h4{
+        text-align: left;
+    }
     /* buttons */
    div{
     button:first-child{

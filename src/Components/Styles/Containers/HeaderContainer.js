@@ -4,6 +4,7 @@ const HeaderContainer = styled.div`
     height: 80px;
     width: 90%;
     margin: 0 auto;
+
     div{
     display:flex;
     justify-content: space-between;
@@ -11,6 +12,28 @@ const HeaderContainer = styled.div`
     height: 100%;
     }
     
+`;
+
+export const Nav = styled.nav`
+    display: flex;
+`;
+
+export const NavBtn = styled.a`
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 120%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    text-transform: uppercase;
+    color: #1D1F22;
+    flex: none;
+    order: 0;
+    flex-grow: 0;    
+   cursor: pointer;
+   margin-right: 32px;
 `;
 
 export const Features = styled.div`

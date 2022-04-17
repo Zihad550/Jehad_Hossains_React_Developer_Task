@@ -3,8 +3,10 @@ import React from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import logo from '../../assets/logo/logo.svg';
 import Cart from '../../Components/CartIcon';
-import HeaderContainer, { Bag, Features } from '../../Components/Styles/Containers/HeaderContainer';
-import Anchor from '../../Components/Styles/Tags/Anchor';
+import Spinner from '../../Components/Spinner';
+import HeaderContainer, {
+  Bag, Features, Nav, NavBtn
+} from '../../Components/Styles/Containers/HeaderContainer';
 import Select from '../../Components/Styles/Tags/Select';
 import { client } from '../../index';
 import ShoppingCart from '../ShoppingCart/ShoppingCart';
@@ -61,7 +63,7 @@ class Header extends React.Component {
     // destructured states
     const { currencies, loading, showCart } = this.state;
     if (loading) {
-      return <h2>Data loading</h2>;
+      return <Spinner />;
     }
     return (
       <>
@@ -71,18 +73,18 @@ class Header extends React.Component {
         <HeaderContainer>
           <div>
             {/* navs */}
-            <nav>
+            <Nav>
               {
               this.navs.map((nav) => (
-                <Anchor
+                <NavBtn
                   onClick={() => this.handleAddToCategory(nav.name)}
-
+                  type="button"
                 >
                   {nav.name}
-                </Anchor>
+                </NavBtn>
               ))
           }
-            </nav>
+            </Nav>
             {/* logo */}
             <Bag as={Link} to="/bag">
               <img src={logo} alt="" />

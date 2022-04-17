@@ -48,12 +48,14 @@ class Product extends Component {
               <Cart width="20px" color="white" />
             </button>
           </div>
+
           <h4>
             {name}
           </h4>
           <p>
             {`${currency.symbol} ${amount}`}
           </p>
+
         </CardBody>
       </Card>
     );

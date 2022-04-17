@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import CartContainer, {
   CartBackground, CartBody, CartBtn, CartProduct, CartProductImgWrp, CartTotal, Quantity
 } from '../../Components/Styles/Containers/Cart';
+import Button from '../../Components/Styles/Tags/Button';
 
 class ShoppingCart extends Component {
   calculateTotal = () => {
@@ -27,7 +29,7 @@ class ShoppingCart extends Component {
           </h4>
           {
             cartProducts.map((product) => (
-              <CartProduct key={product.id}>
+              <CartProduct for="cart" key={product.id}>
                 {/* name & price & size btn */}
                 <CartBody>
                   {/* name */}
@@ -64,6 +66,7 @@ class ShoppingCart extends Component {
                       -
                     </CartBtn>
                   </Quantity>
+
                   <img src={product.src} alt="" />
                 </CartProductImgWrp>
               </CartProduct>
@@ -82,12 +85,12 @@ class ShoppingCart extends Component {
               </p>
             </div>
             <div>
-              <button type="button">
+              <Button as={Link} bgColor="white" to="/bag" type="button">
                 View Bag
-              </button>
-              <button type="button">
+              </Button>
+              <Button bgColor="#5ECE7B" type="button">
                 Check Out
-              </button>
+              </Button>
             </div>
           </CartTotal>
         </CartContainer>

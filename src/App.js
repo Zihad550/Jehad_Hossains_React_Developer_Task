@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Loader from './Components/Loader';
 import GlobalStyle from './Components/Styles/Global.styles';
 import SelectedProductsContext from './Contexts/SelectedProductsContext';
 import Bag from './Pages/Bag/Bag';
+import Home from './Pages/Home/Home';
 import ProductDetail from './Pages/ProductDetail/ProductDetail';
 
 export default class App extends Component {
@@ -53,7 +53,7 @@ export default class App extends Component {
       ));
     } else {
       exists.quantity -= 1;
-      exists.productTotal += exists.amount;
+      exists.productTotal -= exists.amount;
       this.setState({ shouldUpdate: false });
     }
   };
@@ -67,7 +67,7 @@ export default class App extends Component {
           <Routes>
 
             {/* home */}
-            <Route path="/" element={<Loader handleCurrency={this.handleCurrency} currency={currency} handleAddToCart={this.handleAddToCart} cartProducts={cartProducts} />} />
+            <Route path="/" element={<Home handleCurrency={this.handleCurrency} currency={currency} handleAddToCart={this.handleAddToCart} cartProducts={cartProducts} />} />
 
             {/* detail */}
             <Route path="/detail/:id" element={<ProductDetail currency={currency} />} />
