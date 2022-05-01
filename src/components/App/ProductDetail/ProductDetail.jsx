@@ -7,9 +7,7 @@ import Container from '../../shared/Styles/Containers/Container';
 import DetailContainer, {
   AddBtn,
   Attribute,
-  AttributeBtn,
-  Attributes,
-  Desc,
+  AttributeBtn, Desc,
   DetailImgs,
   Details,
   Price
@@ -119,11 +117,11 @@ class ProductDetail extends Component {
               {/* product name & brand */}
               <div>
                 <h3>{brand}</h3>
-                <h4 style={{ marginTop: '10px' }}>{name}</h4>
+                <h4>{name}</h4>
               </div>
 
               {/* product size */}
-              <Attributes>
+              <div>
 
                 {
                   attributes?.map((attribute) => (
@@ -142,7 +140,7 @@ class ProductDetail extends Component {
                   ))
                 }
 
-              </Attributes>
+              </div>
 
               {/* product price */}
               <Price>

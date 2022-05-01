@@ -25,6 +25,7 @@ class ShoppingCart extends Component {
 
   render() {
     const { cartProducts, handleAddToCart, currency } = this.props;
+    console.log(cartProducts);
     return (
       <CartBackground>
         <CartContainer>

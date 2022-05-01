@@ -35,29 +35,38 @@ export default class App extends Component {
 
   // handle product adding to cart
   handleAddToCart = (product) => {
-    this.setState({ isUpdated: false });
-    const { cartProducts } = this.state;
-    const {
-      id, option,
-    } = product;
+    if (product.inStock || product.inStock === undefined) {
+      this.setState({ isUpdated: false });
+      const { cartProducts } = this.state;
+      const {
+        id, option,
+      } = product;
 
-    const exists = cartProducts.find((product) => product.id === id);
+      const exists = cartProducts.find((product) => product.id === id);
 
-    // if the product exists then its quantity will increase
-    if (exists !== undefined && !option) {
-      exists.quantity += 1;
-      exists.productTotal += exists.amount;
-      this.setState({ isUpdated: true });
-    // decrease the product quantity
-    } else if (option === 'decrease') {
-      this.handleRemoveFromCart(exists, id);
+      // if the product exists then its quantity will increase
+      if (exists !== undefined && !option) {
+        this.handleUpdateCart(exists);
+        // decrease the product quantity
+      } else if (option === 'decrease') {
+        this.handleRemoveFromCart(exists, id);
+      } else {
+        this.setState((prevState) => ({
+          cartProducts: [...prevState.cartProducts, product],
+
+        }));
+        this.setState({ isUpdated: true });
+      }
     } else {
-      this.setState((prevState) => ({
-        cartProducts: [...prevState.cartProducts, product],
-
-      }));
-      this.setState({ isUpdated: true });
+      alert('Product out of stock');
     }
+  };
+
+  // update products in cart
+  handleUpdateCart = (exists) => {
+    exists.quantity += 1;
+    exists.productTotal += exists.amount;
+    this.setState({ isUpdated: true });
   };
 
   // handle remove from cart

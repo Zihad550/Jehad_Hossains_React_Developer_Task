@@ -9,6 +9,7 @@ const DetailContainer = styled.div`
 
    @media only screen and (max-width: 1000px) {
        flex-direction: column;
+       height: max-content
    }
 `;
 
@@ -18,11 +19,12 @@ flex-basis: 50%;
 
 @media only screen and (max-width: 1000px) {
        padding-bottom: 20px;
+       height: 60vh
    }
    
     div:first-child{
         width: 300px;
-        height: 100%;
+        height: auto;
         overflow-y: scroll;
         img{
         width: 100%;
@@ -69,6 +71,8 @@ export const Details = styled.div`
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
+    margin-bottom: 50px;
+
     h3{
     font-weight: 600;
     font-size: 30px;
@@ -85,11 +89,8 @@ export const Details = styled.div`
     display: flex;
     align-items: center;
     color: #1D1F22;
+    margin: 12px 0;
     }
-`;
-
-export const Attributes = styled.div`
-
 `;
 
 export const Attribute = styled.div`

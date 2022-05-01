@@ -23,6 +23,8 @@ class Product extends Component {
       name, inStock, prices, gallery, id,
     } = product;
 
+    console.log(product);
+
     const productPrice = prices.find((price) => price.currency.symbol === changedCurrency);
 
     const { amount, currency } = productPrice;
