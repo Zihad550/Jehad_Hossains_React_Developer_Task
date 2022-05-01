@@ -1,5 +1,7 @@
-import React from 'react';
-import SpinnerContainer, { SpinnerWrp } from './Styles/Containers/Spinner';
+import React from "react";
+import SpinnerContainer, {
+  SpinnerWrp
+} from "../Styles/Containers/Spinner";
 
 function Spinner() {
   return (

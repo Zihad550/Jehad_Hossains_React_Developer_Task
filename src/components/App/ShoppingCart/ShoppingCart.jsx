@@ -1,13 +1,21 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import CartContainer, {
-  CartBackground, CartBody, CartBtn, CartProduct, CartProductImgWrp, CartTotal, Quantity
-} from '../../Components/Styles/Containers/Cart';
-import Button from '../../Components/Styles/Tags/Button';
+  CartBackground,
+  CartBody,
+  CartBtn,
+  CartProduct,
+  CartProductImgWrp,
+  CartTotal,
+  Quantity
+} from '../../shared/Styles/Containers/Cart';
+import Button from '../../shared/Styles/Tags/Button';
 
 class ShoppingCart extends Component {
   calculateTotal = () => {
-    const total = this.props.cartProducts.map((product) => product.productTotal);
+    const { cartProducts } = this.props;
+    const total = cartProducts.map((product) => product.productTotal);
 
     if (total.length !== 0) {
       return total?.reduce((prev, next) => prev + next).toFixed(2);
@@ -98,5 +106,11 @@ class ShoppingCart extends Component {
     );
   }
 }
+
+ShoppingCart.propTypes = {
+  cartProducts: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
+  handleAddToCart: PropTypes.func.isRequired,
+  currency: PropTypes.string.isRequired,
+};
 
 export default ShoppingCart;

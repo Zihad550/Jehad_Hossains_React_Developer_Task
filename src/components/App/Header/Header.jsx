@@ -1,29 +1,36 @@
 import { gql } from '@apollo/client';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Link, Navigate } from 'react-router-dom';
-import logo from '../../assets/logo/logo.svg';
-import Cart from '../../Components/CartIcon';
-import Spinner from '../../Components/Spinner';
+import logo from '../../../assets/logo/logo.svg';
+import Cart from '../../shared/CartIcon/CartIcon';
+import Spinner from '../../shared/Spinner/Spinner';
 import HeaderContainer, {
-  Bag, Features, Nav, NavBtn
-} from '../../Components/Styles/Containers/HeaderContainer';
-import Select from '../../Components/Styles/Tags/Select';
-import { client } from '../../index';
+  Bag,
+  Features,
+  Nav,
+  NavBtn
+} from '../../shared/Styles/Containers/HeaderContainer';
+import Select from '../../shared/Styles/Tags/Select';
+import { client } from '../App';
 import ShoppingCart from '../ShoppingCart/ShoppingCart';
 
 class Header extends React.Component {
-  state = {
-    currencies: [],
-    loading: true,
-    showCart: false,
-    navigate: false,
-  };
-
   navs = [
     { id: 1, name: 'all', link: '/' },
     { id: 2, name: 'clothes', link: '/' },
-    { id: 3, name: 'tech', link: '/' }
+    { id: 3, name: 'tech', link: '/' },
   ];
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      currencies: [],
+      loading: true,
+      showCart: false,
+      navigate: false,
+    };
+  }
 
   componentDidMount() {
     this.getCurrencies();
@@ -38,7 +45,7 @@ class Header extends React.Component {
           symbol
         }
       }
-      `
+      `,
     }).then((res) => {
       this.setState({ currencies: res.data.currencies, loading: res.loading });
     });
@@ -46,29 +53,32 @@ class Header extends React.Component {
 
   handleShowCart = () => {
     this.setState((state) => ({
-      showCart: !state.showCart
+      showCart: !state.showCart,
     }));
   };
 
   handleAddToCategory = (name) => {
     this.setState({ navigate: true });
-    this.props.handleCategory(name);
+    const { handleCategory } = this.props;
+    handleCategory(name);
   };
 
   render() {
     // destructured props
     const {
-      handleCategory, handleCurrency, cartProducts, currency, handleAddToCart
+      handleCurrency, cartProducts, currency, handleAddToCart,
     } = this.props;
     // destructured states
-    const { currencies, loading, showCart } = this.state;
+    const {
+      currencies, loading, showCart, navigate,
+    } = this.state;
     if (loading) {
       return <Spinner />;
     }
     return (
       <>
         {
-        this.state.navigate && <Navigate to="/" />
+        navigate && <Navigate to="/" />
       }
         <HeaderContainer>
           <div>
@@ -95,8 +105,13 @@ class Header extends React.Component {
               {/* currency */}
               <Select onChange={(e) => handleCurrency(e.target.value)}>
                 {
-                currencies.map((currency) => (
-                  <option key={currency.symbol} value={currency.symbol}>{currency.symbol}</option>
+                currencies.map((productCurrency) => (
+                  <option
+                    key={productCurrency.symbol}
+                    value={productCurrency.symbol}
+                  >
+                    {productCurrency.symbol}
+                  </option>
                 ))
               }
               </Select>
@@ -112,11 +127,26 @@ class Header extends React.Component {
 
         </HeaderContainer>
         {
-              showCart && <ShoppingCart handleAddToCart={handleAddToCart} cartProducts={cartProducts} currency={currency} />
+          showCart
+           && (
+           <ShoppingCart
+             handleAddToCart={handleAddToCart}
+             cartProducts={cartProducts}
+             currency={currency}
+           />
+           )
         }
       </>
     );
   }
 }
+
+Header.propTypes = {
+  handleCategory: PropTypes.func.isRequired,
+  handleCurrency: PropTypes.func.isRequired,
+  cartProducts: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
+  currency: PropTypes.string.isRequired,
+  handleAddToCart: PropTypes.func.isRequired,
+};
 
 export default Header;

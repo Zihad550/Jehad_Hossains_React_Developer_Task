@@ -1,31 +1,36 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Navigate } from 'react-router-dom';
-import Cart from '../../Components/CartIcon';
-import Card, { CardBody, CardHeader } from '../../Components/Styles/Containers/Card';
+import Cart from '../../shared/CartIcon/CartIcon';
+import Card, { CardBody, CardHeader } from '../../shared/Styles/Containers/Card';
 
 class Product extends Component {
-  state = {
-    navigate: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      navigate: false,
+    };
+  }
 
   handleNavigate = () => {
     this.setState({ navigate: true });
   };
 
   render() {
+    const { navigate } = this.state;
     const { product, handleAddToCart, currency: changedCurrency } = this.props;
     const {
-      name, inStock, prices, gallery, id
+      name, inStock, prices, gallery, id,
     } = product;
 
-    const price = prices.find((price) => price.currency.symbol === changedCurrency);
+    const productPrice = prices.find((price) => price.currency.symbol === changedCurrency);
 
-    const { amount, currency } = price;
+    const { amount, currency } = productPrice;
 
     return (
       <Card>
         {
-          this.state.navigate && <Navigate to={`/detail/${id}`} />
+          navigate && <Navigate to={`/detail/${id}`} />
         }
         <CardHeader onClick={this.handleNavigate}>
           <img style={{ width: '100%' }} src={gallery[0]} alt="" />
@@ -41,7 +46,14 @@ class Product extends Component {
           <div>
             <button
               onClick={() => handleAddToCart({
-                id, name, src: gallery[0], amount, currency, productTotal: amount, quantity: 1, inStock
+                id,
+                name,
+                src: gallery[0],
+                amount,
+                currency,
+                productTotal: amount,
+                quantity: 1,
+                inStock,
               })}
               type="button"
             >
@@ -61,5 +73,17 @@ class Product extends Component {
     );
   }
 }
+
+Product.propTypes = {
+  product: PropTypes.objectOf({
+    name: PropTypes.string,
+    inStock: PropTypes.bool,
+    prices: PropTypes.array,
+    gallery: PropTypes.array,
+    id: PropTypes.string,
+  }).isRequired,
+  handleAddToCart: PropTypes.func.isRequired,
+  currency: PropTypes.string.isRequired,
+};
 
 export default Product;

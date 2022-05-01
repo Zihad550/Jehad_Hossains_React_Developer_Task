@@ -14,8 +14,9 @@ const Button = styled.button`
     flex-grow: 0;
     text-transform: uppercase;
     text-decoration: none;
-    color: ${(props) => (props.bgColor === 'white' ? 'black' : 'white')}
-
+    cursor: pointer;
+    color: ${(props) => (props.bgColor === 'white' ? 'black' : 'white')};
+   
 `;
 
 export default Button;

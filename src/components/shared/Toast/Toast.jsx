@@ -2,10 +2,10 @@ import PropTypes from "prop-types";
 import React from "react";
 import {
   IoCheckmarkDoneCircleOutline,
-  IoWarningOutline,
+  IoWarningOutline
 } from "react-icons/io5";
 import { MdOutlineDangerous } from "react-icons/md";
-import ToastContainer, { Icon, Msg } from "./Styles/Containers/Toast";
+import ToastContainer, { Icon, Msg } from "../Styles/Containers/Toast";
 
 function Toast({ variant, message, onClick }) {
   let icon;

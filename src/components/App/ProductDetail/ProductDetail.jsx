@@ -1,8 +1,9 @@
-import { gql } from "@apollo/client";
-import React, { Component } from "react";
-import { useParams } from "react-router-dom";
-import Spinner from "../../Components/Spinner";
-import Container from "../../Components/Styles/Containers/Container";
+import { gql } from '@apollo/client';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { useParams } from 'react-router-dom';
+import Spinner from '../../shared/Spinner/Spinner';
+import Container from '../../shared/Styles/Containers/Container';
 import DetailContainer, {
   AddBtn,
   Desc,
@@ -10,9 +11,9 @@ import DetailContainer, {
   Details,
   Price,
   Size
-} from "../../Components/Styles/Containers/Detail";
-import { client } from "../../index";
-import Header from "../Header/Header";
+} from '../../shared/Styles/Containers/Detail';
+import { client } from '../App';
+import Header from '../Header/Header';
 
 function withParams(Component) {
   return function (props) {
@@ -21,17 +22,21 @@ function withParams(Component) {
 }
 
 class ProductDetail extends Component {
-  state = {
-    product: {},
-    isLoading: true,
-  };
-
-  componentDidMount() {
-    const { id } = this.props.params;
-    this.getProduct(id);
+  constructor(props) {
+    super(props);
+    this.state = {
+      product: {},
+      isLoading: true,
+    };
   }
 
-  getProduct = (id = "apple-imac-2021") => {
+  componentDidMount() {
+    const { params } = this.props;
+
+    this.getProduct(params.id);
+  }
+
+  getProduct = (id = 'apple-imac-2021') => {
     client
       .query({
         query: gql`
@@ -74,15 +79,13 @@ class ProductDetail extends Component {
       });
   };
 
-  // get all the attributes and return each attribute as object
-  // eslint-disable-next-line react/no-unused-class-component-methods
   /* printAttribute = (attributes) => {
     if (attributes.length) {
       return null;
     }
 
     for(let i = 0; i < attributes.length; i++){
-      const newAttribute = attribute.map((att) => ({ items: att.items, name: att.name, id: att.id }));
+    const newAttribute = attribute.map((att) => ({ items: att.items, name: att.name, id: att.id }));
     }
 
     const attribute = attributes.map((att) => ({ items: att.items, name: att.name }));
@@ -102,7 +105,7 @@ class ProductDetail extends Component {
     }
     console.log(attributes);
 
-    const price = product.prices.find(
+    const productPrice = product.prices.find(
       (price) => price.currency.symbol === currency
     );
 
@@ -159,9 +162,9 @@ class ProductDetail extends Component {
                 <p>Price:</p>
                 <p>
                   <span>
-                    {price.currency.symbol}
+                    {productPrice.currency.symbol}
                   </span>
-                  {price.amount}
+                  {productPrice.amount}
                 </p>
               </Price>
               {/* add to cart btn */}
@@ -181,5 +184,10 @@ class ProductDetail extends Component {
     );
   }
 }
+
+ProductDetail.propTypes = {
+  currency: PropTypes.string.isRequired,
+  params: PropTypes.any.isRequired
+};
 
 export default withParams(ProductDetail);
