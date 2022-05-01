@@ -78,8 +78,8 @@ class Header extends React.Component {
     return (
       <>
         {
-        navigate && <Navigate to="/" />
-      }
+           navigate && <Navigate to="/" />
+        }
         <HeaderContainer>
           <div>
             {/* navs */}
