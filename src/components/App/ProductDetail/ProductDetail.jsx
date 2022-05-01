@@ -15,9 +15,9 @@ import DetailContainer, {
 } from '../../shared/Styles/Containers/Detail';
 import Header from '../Header/Header';
 
-function withParams(Component) {
+function withParams(Element) {
   return function (props) {
-    return <Component {...props} params={useParams()} />;
+    return <Element {...props} params={useParams()} />;
   };
 }
 
@@ -171,7 +171,7 @@ class ProductDetail extends Component {
 
 ProductDetail.propTypes = {
   currency: PropTypes.string.isRequired,
-  params: PropTypes.string.isRequired
+  params: PropTypes.string.isRequired,
 };
 
 export default withParams(ProductDetail);

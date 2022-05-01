@@ -22,7 +22,6 @@ class Product extends Component {
     const {
       name, inStock, prices, gallery, id,
     } = product;
-    console.log(product);
 
     const productPrice = prices.find((price) => price.currency.symbol === changedCurrency);
 
@@ -84,9 +83,9 @@ Product.propTypes = {
       currency: PropTypes.shape({
         label: PropTypes.string.isRequired,
         symbol: PropTypes.string.isRequired,
-      })
+      }),
     })),
-    gallery: PropTypes.array,
+    gallery: PropTypes.arrayOf(PropTypes.string),
     id: PropTypes.string,
   }).isRequired,
   handleAddToCart: PropTypes.func.isRequired,

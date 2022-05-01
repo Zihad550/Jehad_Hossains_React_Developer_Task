@@ -11,8 +11,8 @@ import Header from '../Header/Header';
 import Product from '../Product/Product';
 
 class Home extends Component {
-  constructor(props,) {
-    super(props,);
+  constructor(props) {
+    super(props);
     this.state = {
       category: 'all',
       products: [],
@@ -24,25 +24,25 @@ class Home extends Component {
 
   // call get products when component mounts
   componentDidMount() {
-    const { category, } = this.state;
-    this.getProducts(category,);
+    const { category } = this.state;
+    this.getProducts(category);
   }
 
   handleToast = () => {
-    this.setState({ showToast: false, },);
+    this.setState({ showToast: false });
   };
 
   // handle category
-  handleCategory = (category,) => {
-    this.setState({ category, },);
+  handleCategory = (category) => {
+    this.setState({ category });
   };
 
   // get products by category
-  getProducts = (title = 'all',) => {
+  getProducts = (title = 'all') => {
     client.query({
       query: gql`
       {
-        category(input: {title: ${JSON.stringify(title,)}}){
+        category(input: {title: ${JSON.stringify(title)}}){
           products{
             id
             name
@@ -59,9 +59,9 @@ class Home extends Component {
         }
       }
       `,
-    },).then((res,) => {
-      this.setState({ products: res.data.category.products, productsLoading: res.loading, },);
-    },);
+    }).then((res) => {
+      this.setState({ products: res.data.category.products, productsLoading: res.loading });
+    });
   };
 
   render() {
@@ -103,7 +103,7 @@ class Home extends Component {
           {/* main */}
           <ProductsContainer>
             {
-          products.map((product,) => (
+          products.map((product) => (
             <Product
               product={product}
               key={product.id}
@@ -111,7 +111,7 @@ class Home extends Component {
               currency={currency}
               cartProducts={cartProducts}
             />
-          ),)
+          ))
         }
           </ProductsContainer>
 
@@ -126,7 +126,7 @@ class Home extends Component {
 Home.propTypes = {
   handleCurrency: PropTypes.func.isRequired,
   currency: PropTypes.string.isRequired,
-  cartProducts: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string,),).isRequired,
+  cartProducts: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
   handleAddToCart: PropTypes.func.isRequired,
 
 };

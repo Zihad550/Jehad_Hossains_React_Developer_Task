@@ -33,9 +33,7 @@ export default class App extends Component {
       const {
         id, option,
       } = product;
-
-      const exists = cartProducts.find((product) => product.id === id);
-
+      const exists = cartProducts.find((cartProduct) => cartProduct.id === id);
       // if the product exists then its quantity will increase
       if (exists !== undefined && !option) {
         this.handleUpdateCart(exists);
@@ -45,7 +43,6 @@ export default class App extends Component {
       } else {
         this.setState((prevState) => ({
           cartProducts: [...prevState.cartProducts, product],
-
         }));
         this.setState({ isUpdated: true });
       }
