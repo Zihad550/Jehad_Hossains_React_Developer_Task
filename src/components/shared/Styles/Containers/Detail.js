@@ -128,8 +128,8 @@ cursor: pointer;
 
 
 /* color: #292929; */
-color: ${({ bgColor }) => ((bgColor === '#030BFF' || bgColor === '#000000') ? '#fff' : '#000')};
-background: ${({ bgColor }) => (bgColor.startsWith('#') ? (bgColor) : 'white')};
+color: ${({ bgcolor }) => ((bgcolor === '#030BFF' || bgcolor === '#000000') ? '#fff' : '#000')};
+background: ${({ bgcolor }) => (bgcolor.startsWith('#') ? (bgcolor) : 'white')};
 
 &:hover{
     background: black;

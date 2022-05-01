@@ -7,14 +7,12 @@ import Container from '../../shared/Styles/Containers/Container';
 import ProductsContainer from '../../shared/Styles/Containers/ProductsContainer';
 import Title from '../../shared/Styles/Tags/Title';
 import Toast from '../../shared/Toast/Toast';
-import Header from '../Header/Header';
 import Product from '../Product/Product';
 
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      category: 'all',
       products: [],
       productsLoading: true,
       // shouldUpdate: true,
@@ -24,17 +22,12 @@ class Home extends Component {
 
   // call get products when component mounts
   componentDidMount() {
-    const { category } = this.state;
+    const { category } = this.props;
     this.getProducts(category);
   }
 
   handleToast = () => {
     this.setState({ showToast: false });
-  };
-
-  // handle category
-  handleCategory = (category) => {
-    this.setState({ category });
   };
 
   // get products by category
@@ -69,7 +62,7 @@ class Home extends Component {
       category, productsLoading, products, showToast,
     } = this.state;
     const {
-      handleCurrency, currency, cartProducts, handleAddToCart,
+      currency, cartProducts, handleAddToCart,
     } = this.props;
 
     // when product loading
@@ -80,13 +73,13 @@ class Home extends Component {
       <>
 
         {/* header */}
-        <Header
+        {/* <Header
           cartProducts={cartProducts}
           handleCategory={this.handleCategory}
           handleCurrency={handleCurrency}
           currency={currency}
           handleAddToCart={handleAddToCart}
-        />
+        /> */}
 
         <Container>
 
@@ -124,11 +117,24 @@ class Home extends Component {
 }
 
 Home.propTypes = {
-  handleCurrency: PropTypes.func.isRequired,
+  // handleCurrency: PropTypes.func.isRequired,
   currency: PropTypes.string.isRequired,
-  cartProducts: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
-  handleAddToCart: PropTypes.func.isRequired,
+  cartProducts: PropTypes.shape({
+    name: PropTypes.string,
+    inStock: PropTypes.bool,
+    prices: PropTypes.arrayOf(PropTypes.shape({
+      amount: PropTypes.number.isRequired,
+      currency: PropTypes.shape({
+        label: PropTypes.string.isRequired,
+        symbol: PropTypes.string.isRequired,
+      }),
+    })),
+    gallery: PropTypes.arrayOf(PropTypes.string),
+    id: PropTypes.string,
+  }).isRequired,
 
+  handleAddToCart: PropTypes.func.isRequired,
+  category: PropTypes.string.isRequired,
 };
 
 export default Home;

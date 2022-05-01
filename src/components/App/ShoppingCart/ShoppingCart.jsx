@@ -93,10 +93,10 @@ class ShoppingCart extends Component {
               </p>
             </div>
             <div>
-              <Button as={Link} bgColor="white" to="/bag" type="button">
+              <Button as={Link} bgcolor="white" to="/bag" type="button">
                 View Bag
               </Button>
-              <Button bgColor="#5ECE7B" type="button">
+              <Button bgcolor="#5ECE7B" type="button">
                 Check Out
               </Button>
             </div>

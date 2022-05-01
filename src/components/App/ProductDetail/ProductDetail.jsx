@@ -13,7 +13,6 @@ import DetailContainer, {
   Details,
   Price
 } from '../../shared/Styles/Containers/Detail';
-import Header from '../Header/Header';
 
 function withParams(Element) {
   return function (props) {
@@ -42,6 +41,7 @@ class ProductDetail extends Component {
         query: gql`
         {
           product(id: ${JSON.stringify(id)}){
+            id
             name
             gallery
             brand
@@ -81,55 +81,55 @@ class ProductDetail extends Component {
   render() {
     const { product, isLoading } = this.state;
     const {
-      name, attributes, description, brand,
+      name, attributes, description, brand, id, gallery, prices, inStock
     } = product;
-    const { currency } = this.props;
+    const { currency, handleAddToCart } = this.props;
+    console.log(attributes);
 
     // when product loading
     if (isLoading) {
       return <Spinner />;
     }
 
-    const productPrice = product.prices.find(
-      (price) => price.currency.symbol === currency,
+    const productPrice = prices.find(
+      (price) => price.currency.symbol === currency
     );
-
+    const { amount } = productPrice;
     return (
-      <>
-        <Header />
-        <Container>
-          <DetailContainer>
-            {/* product images */}
-            <DetailImgs>
-              <div>
-                {product.gallery.map((img) => (
-                  <img src={img} key={Math.random() * 1010} alt="product" />
-                ))}
-              </div>
-              <div>
-                <img src={product.gallery[0]} alt="" />
-              </div>
-            </DetailImgs>
+      <Container>
+        <DetailContainer>
+          {/* product images */}
+          <DetailImgs>
+            <div>
+              {product.gallery.map((img) => (
+                <img src={img} key={Math.random() * 1010} alt="product" />
+              ))}
+            </div>
+            <div>
+              <img src={product.gallery[0]} alt="" />
+            </div>
+          </DetailImgs>
 
-            {/* product details */}
-            <Details>
-              {/* product name & brand */}
-              <div>
-                <h3>{brand}</h3>
-                <h4>{name}</h4>
-              </div>
+          {/* product details */}
+          <Details>
+            {/* product name & brand */}
+            <div>
+              <h3>{brand}</h3>
+              <h4>{name}</h4>
+            </div>
 
-              {/* product size */}
-              <div>
+            {/* product size */}
+            <div>
 
-                {
+              {
                   attributes?.map((attribute) => (
-                    <Attribute>
+                    <Attribute key={attribute.id}>
                       <h5>{attribute.name}</h5>
                       <p>
                         {attribute.items.map((item) => (
                           <AttributeBtn
-                            bgColor={item.value}
+                            key={item.id}
+                            bgcolor={item.value}
                           >
                             {item.displayValue}
                           </AttributeBtn>
@@ -139,32 +139,44 @@ class ProductDetail extends Component {
                   ))
                 }
 
-              </div>
+            </div>
 
-              {/* product price */}
-              <Price>
-                <p>Price:</p>
-                <p style={{ margin: '15px 0' }}>
-                  <span>
-                    {productPrice.currency.symbol}
-                  </span>
-                  {productPrice.amount}
-                </p>
-              </Price>
-              {/* add to cart btn */}
-              <AddBtn type="button">Add To Cart</AddBtn>
+            {/* product price */}
+            <Price>
+              <p>Price:</p>
+              <p style={{ margin: '15px 0' }}>
+                <span>
+                  {currency}
+                </span>
+                {amount}
+              </p>
+            </Price>
+            {/* add to cart btn */}
+            <AddBtn
+              onClick={() => handleAddToCart({
+                id,
+                name,
+                src: gallery[0],
+                amount,
+                currency,
+                productTotal: amount,
+                quantity: 1,
+                inStock,
+              })}
+              type="button"
+            >
+              Add To Cart
+            </AddBtn>
 
-              {/* product desc */}
-              <Desc dangerouslySetInnerHTML={{ __html: description }} />
+            {/* product desc */}
+            <Desc dangerouslySetInnerHTML={{ __html: description }} />
 
-              {/* add to cart btn */}
+            {/* add to cart btn */}
 
-              {/* desc */}
-            </Details>
-          </DetailContainer>
-        </Container>
-
-      </>
+            {/* desc */}
+          </Details>
+        </DetailContainer>
+      </Container>
     );
   }
 }
@@ -174,6 +186,7 @@ ProductDetail.propTypes = {
   params: PropTypes.shape({
     id: PropTypes.string
   }).isRequired,
+  handleAddToCart: PropTypes.func.isRequired,
 };
 
 export default withParams(ProductDetail);

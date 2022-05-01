@@ -6,7 +6,7 @@ const Button = styled.button`
     justify-content: center;
     align-items: center;
     padding: 16px 32px;
-    background: ${(props) => props.bgColor};
+    background: ${(props) => props.bgcolor};
     border: 1px solid #1D1F22;
     box-sizing: border-box;
     flex: none;
@@ -15,7 +15,7 @@ const Button = styled.button`
     text-transform: uppercase;
     text-decoration: none;
     cursor: pointer;
-    color: ${(props) => (props.bgColor === 'white' ? 'black' : 'white')};
+    color: ${(props) => (props.bgcolor === 'white' ? 'black' : 'white')};
    
 `;
 

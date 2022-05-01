@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import SelectedProductsContext from '../../Contexts/SelectedProductsContext';
 import GlobalStyle from '../shared/Styles/Global.styles';
 import Bag from './Bag/Bag';
+import Header from './Header/Header';
 import Home from './Home/Home';
 import ProductDetail from './ProductDetail/ProductDetail';
 
@@ -13,6 +14,7 @@ export default class App extends Component {
       currency: '$',
       cartProducts: [],
       isUpdated: false,
+      category: 'all',
     };
   }
 
@@ -25,8 +27,16 @@ export default class App extends Component {
     this.setState({ currency });
   };
 
+  // handle category
+  handleCategory = (category) => {
+    this.setState({ category });
+  };
+
   // handle product adding to cart
   handleAddToCart = (product) => {
+    console.log('inside');
+    if (product === undefined) return;
+
     if (product.inStock || product.inStock === undefined) {
       this.setState({ isUpdated: false });
       const { cartProducts } = this.state;
@@ -76,18 +86,37 @@ export default class App extends Component {
   };
 
   render() {
-    const { currency, cartProducts } = this.state;
+    const { currency, cartProducts, category } = this.state;
     return (
       <SelectedProductsContext.Provider value={this.state}>
         <GlobalStyle />
         <BrowserRouter>
+          {/* header */}
+          <Header
+            cartProducts={cartProducts}
+            handleCategory={this.handleCategory}
+            handleCurrency={this.handleCurrency}
+            currency={currency}
+            handleAddToCart={this.handleAddToCart}
+          />
           <Routes>
 
             {/* home */}
-            <Route path="/" element={<Home handleCurrency={this.handleCurrency} currency={currency} handleAddToCart={this.handleAddToCart} cartProducts={cartProducts} />} />
+            <Route
+              path="/"
+              element={(
+                <Home
+                  category={category}
+                  handleCurrency={this.handleCurrency}
+                  currency={currency}
+                  handleAddToCart={this.handleAddToCart}
+                  cartProducts={cartProducts}
+                />
+)}
+            />
 
             {/* detail */}
-            <Route path="/detail/:id" element={<ProductDetail currency={currency} />} />
+            <Route path="/detail/:id" element={<ProductDetail handleAddToCart={this.handleAddToCart} currency={currency} />} />
 
             {/* bag */}
             <Route path="/bag" element={<Bag cartProducts={cartProducts} handleAddToCart={this.handleAddToCart} currency={currency} />} />

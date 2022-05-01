@@ -9,7 +9,6 @@ import {
 } from '../../shared/Styles/Containers/Cart';
 import Container from '../../shared/Styles/Containers/Container';
 import Button from '../../shared/Styles/Tags/Button';
-import Header from '../Header/Header';
 
 function Bag({ cartProducts, handleAddToCart }) {
   const calculateTotal = () => {
@@ -28,8 +27,6 @@ function Bag({ cartProducts, handleAddToCart }) {
   };
   return (
     <div style={{ marginBottom: '20px' }}>
-      {/* header */}
-      <Header />
 
       {/* main */}
       <Container>
@@ -96,7 +93,7 @@ function Bag({ cartProducts, handleAddToCart }) {
             {' '}
             {calculateTotal()}
           </p>
-          <Button bgColor="#5ECE7B">
+          <Button bgcolor="#5ECE7B">
             Order
           </Button>
         </div>
@@ -106,7 +103,20 @@ function Bag({ cartProducts, handleAddToCart }) {
 }
 
 Bag.propTypes = {
-  cartProducts: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
+  cartProducts: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string,
+    inStock: PropTypes.bool,
+    prices: PropTypes.arrayOf(PropTypes.shape({
+      amount: PropTypes.number.isRequired,
+      currency: PropTypes.shape({
+        label: PropTypes.string.isRequired,
+        symbol: PropTypes.string.isRequired,
+      }),
+    })),
+    gallery: PropTypes.arrayOf(PropTypes.string),
+    id: PropTypes.string,
+  })).isRequired,
+  // cartProducts: PropTypes.string.isRequired,
   handleAddToCart: PropTypes.func.isRequired,
 };
 
