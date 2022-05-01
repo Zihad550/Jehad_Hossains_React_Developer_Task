@@ -6,11 +6,13 @@ import Spinner from '../../shared/Spinner/Spinner';
 import Container from '../../shared/Styles/Containers/Container';
 import DetailContainer, {
   AddBtn,
+  Attribute,
+  AttributeBtn,
+  Attributes,
   Desc,
   DetailImgs,
   Details,
-  Price,
-  Size
+  Price
 } from '../../shared/Styles/Containers/Detail';
 import { client } from '../App';
 import Header from '../Header/Header';
@@ -71,26 +73,12 @@ class ProductDetail extends Component {
         `,
       })
       .then((res) => {
-        console.log(res.loading);
         this.setState({
           product: res.data.product,
           isLoading: res.loading,
         });
       });
   };
-
-  /* printAttribute = (attributes) => {
-    if (attributes.length) {
-      return null;
-    }
-
-    for(let i = 0; i < attributes.length; i++){
-    const newAttribute = attribute.map((att) => ({ items: att.items, name: att.name, id: att.id }));
-    }
-
-    const attribute = attributes.map((att) => ({ items: att.items, name: att.name }));
-    return attribute;
-  }; */
 
   render() {
     const { product, isLoading } = this.state;
@@ -131,31 +119,30 @@ class ProductDetail extends Component {
               {/* product name & brand */}
               <div>
                 <h3>{brand}</h3>
-                <h4>{name}</h4>
+                <h4 style={{ marginTop: '10px' }}>{name}</h4>
               </div>
 
               {/* product size */}
-              <Size>
+              <Attributes>
 
-                <p>Size</p>
-                {/* {attributes[0].items.map((attribute) => (
-                  <SizeBtn type="button" key={attribute.id}>
-                    {attribute.value}
-                  </SizeBtn>
-                ))} */}
-
-                {/* {
-                  attributes.map((attribute) => (
-                    <p>{attribute.name}</p>
+                {
+                  attributes?.map((attribute) => (
+                    <Attribute>
+                      <h5>{attribute.name}</h5>
+                      <p>
+                        {attribute.items.map((item) => (
+                          <AttributeBtn
+                            bgColor={item.value}
+                          >
+                            {item.displayValue}
+                          </AttributeBtn>
+                        ))}
+                      </p>
+                    </Attribute>
                   ))
                 }
-                {
-                  attributes.map((attribute) => (
-                    <p>{attribute.name}</p>
-                  ))
-                } */}
 
-              </Size>
+              </Attributes>
 
               {/* product price */}
               <Price>

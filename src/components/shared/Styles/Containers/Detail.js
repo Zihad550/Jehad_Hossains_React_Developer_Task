@@ -1,28 +1,37 @@
 import styled from 'styled-components';
 
 const DetailContainer = styled.div`
-   /* display: grid;
-   column-gap: 100px;
-   grid-template-columns: repeat(2, 1fr); */
    display: flex;
    justify-content: space-between;
    align-items: center;
-   margin-top: 70px;
-   height: 60vh;
+   margin-top: 150px;
+   height: 450px;
+
+   @media only screen and (max-width: 1000px) {
+       flex-direction: column;
+   }
 `;
 
 export const DetailImgs = styled.div`
 display: flex;
 flex-basis: 50%;
+
+@media only screen and (max-width: 1000px) {
+       padding-bottom: 20px;
+   }
+   
     div:first-child{
         width: 300px;
-        height: 60vh;
+        height: 100%;
         overflow-y: scroll;
         img{
         width: 100%;
         height: auto;
         margin-bottom: 20px;
     }
+
+    
+
       /* scrollbar css */
       ::-webkit-scrollbar {
   width: 5px;
@@ -79,18 +88,52 @@ export const Details = styled.div`
     }
 `;
 
-export const Size = styled.div`
-    p{
-    font-family: 'Roboto Condensed';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 18px;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    color: #1D1F22;
+export const Attributes = styled.div`
+
+`;
+
+export const Attribute = styled.div`
+    h5{
+        font-family: 'Roboto Condensed';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 18px;
+        line-height: 18px;
+        color: #1D1F22;
+        margin-bottom: 8px;
     }
+
+    p{
+        margin-bottom: 24px;
+        display: flex;
+    }
+`;
+
+export const AttributeBtn = styled.button`
+border: 1px solid #A6A6A6;
+box-sizing: border-box;
+font-family: 'Source Sans Pro';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 18px;
+display: flex;
+align-items: center;
+text-align: center;
+letter-spacing: 0.05em;
+margin-right: 12px;
+padding: 14px 20px;
+cursor: pointer;
+
+
+/* color: #292929; */
+color: ${({ bgColor }) => ((bgColor === '#030BFF' || bgColor === '#000000') ? '#fff' : '#000')};
+background: ${({ bgColor }) => (bgColor.startsWith('#') ? (bgColor) : 'white')};
+
+&:hover{
+    background: black;
+    color: white;
+}
 `;
 
 export const Price = styled.div`
@@ -113,14 +156,6 @@ export const Desc = styled.p`
         color: #1D1F22;
 `;
 
-export const SizeBtn = styled.button`
-    width: 63px;
-    height: 45px;
-    border: 1px solid #1D1F22;
-    box-sizing: border-box;
-    margin-right: 12px;
-`;
-
 export const AddBtn = styled.button`
     display: flex;
     flex-direction: column;
@@ -139,6 +174,7 @@ export const AddBtn = styled.button`
     line-height: 120%;
     color: #fff;
     text-transform: uppercase;
+    cursor: pointer;
 `;
 
 export default DetailContainer;
