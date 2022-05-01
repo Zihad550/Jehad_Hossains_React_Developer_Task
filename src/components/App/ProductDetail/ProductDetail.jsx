@@ -171,7 +171,9 @@ class ProductDetail extends Component {
 
 ProductDetail.propTypes = {
   currency: PropTypes.string.isRequired,
-  params: PropTypes.string.isRequired,
+  params: PropTypes.shape({
+    id: PropTypes.string
+  }).isRequired,
 };
 
 export default withParams(ProductDetail);

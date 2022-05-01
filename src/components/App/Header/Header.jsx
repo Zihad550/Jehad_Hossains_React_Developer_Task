@@ -22,8 +22,8 @@ class Header extends React.Component {
     { id: 3, name: 'tech', link: '/', },
   ];
 
-  constructor(props,) {
-    super(props,);
+  constructor(props) {
+    super(props);
     this.state = {
       currencies: [],
       loading: true,
@@ -57,10 +57,10 @@ class Header extends React.Component {
     }),);
   };
 
-  handleAddToCategory = (name,) => {
-    this.setState({ navigate: true, },);
-    const { handleCategory, } = this.props;
-    handleCategory(name,);
+  handleAddToCategory = (name) => {
+    this.setState({ navigate: true });
+    const { handleCategory } = this.props;
+    handleCategory(name);
   };
 
   render() {
@@ -68,13 +68,16 @@ class Header extends React.Component {
     const {
       handleCurrency, cartProducts, currency, handleAddToCart,
     } = this.props;
+
     // destructured states
     const {
       currencies, loading, showCart, navigate,
     } = this.state;
+
     if (loading) {
       return <Spinner />;
     }
+
     return (
       <>
         {
@@ -85,8 +88,9 @@ class Header extends React.Component {
             {/* navs */}
             <Nav>
               {
-              this.navs.map((nav,) => (
+              this.navs.map((nav) => (
                 <NavBtn
+                  key={nav.id}
                   onClick={() => this.handleAddToCategory(nav.name,)}
                   type="button"
                 >
@@ -147,8 +151,14 @@ Header.propTypes = {
   cartProducts: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string,
     inStock: PropTypes.bool,
-    prices: PropTypes.array,
-    gallery: PropTypes.array,
+    prices: PropTypes.arrayOf(PropTypes.shape({
+      amount: PropTypes.number.isRequired,
+      currency: PropTypes.shape({
+        label: PropTypes.string.isRequired,
+        symbol: PropTypes.string.isRequired,
+      }),
+    })),
+    gallery: PropTypes.arrayOf(PropTypes.string),
     id: PropTypes.string,
   })).isRequired,
   currency: PropTypes.string.isRequired,
