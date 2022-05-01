@@ -24,7 +24,7 @@ flex-basis: 50%;
    
     div:first-child{
         width: 300px;
-        height: auto;
+        height: 60vh;
         overflow-y: scroll;
         img{
         width: 100%;
@@ -148,15 +148,6 @@ export const Price = styled.div`
     }
 `;
 
-export const Desc = styled.p`
-        font-family: 'Roboto';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 159.96%;
-        color: #1D1F22;
-`;
-
 export const AddBtn = styled.button`
     display: flex;
     flex-direction: column;
@@ -175,7 +166,25 @@ export const AddBtn = styled.button`
     line-height: 120%;
     color: #fff;
     text-transform: uppercase;
+    margin-bottom: 15px;
     cursor: pointer;
+`;
+
+export const Desc = styled.p`
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 159.96%;
+        color: #1D1F22;
+
+        h3{
+            margin-bottom: 10px;
+            
+        }
+        p{
+            margin-bottom: 20px;
+        }
 `;
 
 export default DetailContainer;

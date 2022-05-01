@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import logo from '../../../assets/logo/logo.svg';
+import client from '../../../services/ApolloClient';
 import Cart from '../../shared/CartIcon/CartIcon';
 import Spinner from '../../shared/Spinner/Spinner';
 import HeaderContainer, {
@@ -12,18 +13,17 @@ import HeaderContainer, {
   NavBtn
 } from '../../shared/Styles/Containers/HeaderContainer';
 import Select from '../../shared/Styles/Tags/Select';
-import { client } from '../App';
 import ShoppingCart from '../ShoppingCart/ShoppingCart';
 
 class Header extends React.Component {
   navs = [
-    { id: 1, name: 'all', link: '/' },
-    { id: 2, name: 'clothes', link: '/' },
-    { id: 3, name: 'tech', link: '/' },
+    { id: 1, name: 'all', link: '/', },
+    { id: 2, name: 'clothes', link: '/', },
+    { id: 3, name: 'tech', link: '/', },
   ];
 
-  constructor(props) {
-    super(props);
+  constructor(props,) {
+    super(props,);
     this.state = {
       currencies: [],
       loading: true,
@@ -46,21 +46,21 @@ class Header extends React.Component {
         }
       }
       `,
-    }).then((res) => {
-      this.setState({ currencies: res.data.currencies, loading: res.loading });
-    });
+    },).then((res,) => {
+      this.setState({ currencies: res.data.currencies, loading: res.loading, },);
+    },);
   };
 
   handleShowCart = () => {
-    this.setState((state) => ({
+    this.setState((state,) => ({
       showCart: !state.showCart,
-    }));
+    }),);
   };
 
-  handleAddToCategory = (name) => {
-    this.setState({ navigate: true });
-    const { handleCategory } = this.props;
-    handleCategory(name);
+  handleAddToCategory = (name,) => {
+    this.setState({ navigate: true, },);
+    const { handleCategory, } = this.props;
+    handleCategory(name,);
   };
 
   render() {
@@ -85,14 +85,14 @@ class Header extends React.Component {
             {/* navs */}
             <Nav>
               {
-              this.navs.map((nav) => (
+              this.navs.map((nav,) => (
                 <NavBtn
-                  onClick={() => this.handleAddToCategory(nav.name)}
+                  onClick={() => this.handleAddToCategory(nav.name,)}
                   type="button"
                 >
                   {nav.name}
                 </NavBtn>
-              ))
+              ),)
           }
             </Nav>
             {/* logo */}
@@ -103,16 +103,16 @@ class Header extends React.Component {
             {/* features */}
             <Features>
               {/* currency */}
-              <Select onChange={(e) => handleCurrency(e.target.value)}>
+              <Select onChange={(e,) => handleCurrency(e.target.value,)}>
                 {
-                currencies.map((productCurrency) => (
+                currencies.map((productCurrency,) => (
                   <option
                     key={productCurrency.symbol}
                     value={productCurrency.symbol}
                   >
                     {productCurrency.symbol}
                   </option>
-                ))
+                ),)
               }
               </Select>
 
@@ -144,7 +144,13 @@ class Header extends React.Component {
 Header.propTypes = {
   handleCategory: PropTypes.func.isRequired,
   handleCurrency: PropTypes.func.isRequired,
-  cartProducts: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
+  cartProducts: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string,
+    inStock: PropTypes.bool,
+    prices: PropTypes.array,
+    gallery: PropTypes.array,
+    id: PropTypes.string,
+  })).isRequired,
   currency: PropTypes.string.isRequired,
   handleAddToCart: PropTypes.func.isRequired,
 };

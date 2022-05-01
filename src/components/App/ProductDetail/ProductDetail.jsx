@@ -2,6 +2,7 @@ import { gql } from '@apollo/client';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { useParams } from 'react-router-dom';
+import client from '../../../services/ApolloClient';
 import Spinner from '../../shared/Spinner/Spinner';
 import Container from '../../shared/Styles/Containers/Container';
 import DetailContainer, {
@@ -12,7 +13,6 @@ import DetailContainer, {
   Details,
   Price
 } from '../../shared/Styles/Containers/Detail';
-import { client } from '../App';
 import Header from '../Header/Header';
 
 function withParams(Component) {
@@ -81,7 +81,7 @@ class ProductDetail extends Component {
   render() {
     const { product, isLoading } = this.state;
     const {
-      name, attributes, description, brand
+      name, attributes, description, brand,
     } = product;
     const { currency } = this.props;
 
@@ -89,10 +89,9 @@ class ProductDetail extends Component {
     if (isLoading) {
       return <Spinner />;
     }
-    console.log(attributes);
 
     const productPrice = product.prices.find(
-      (price) => price.currency.symbol === currency
+      (price) => price.currency.symbol === currency,
     );
 
     return (
@@ -145,7 +144,7 @@ class ProductDetail extends Component {
               {/* product price */}
               <Price>
                 <p>Price:</p>
-                <p>
+                <p style={{ margin: '15px 0' }}>
                   <span>
                     {productPrice.currency.symbol}
                   </span>
@@ -172,7 +171,7 @@ class ProductDetail extends Component {
 
 ProductDetail.propTypes = {
   currency: PropTypes.string.isRequired,
-  params: PropTypes.any.isRequired
+  params: PropTypes.string.isRequired
 };
 
 export default withParams(ProductDetail);

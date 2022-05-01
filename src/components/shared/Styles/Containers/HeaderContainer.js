@@ -16,7 +16,7 @@ const HeaderContainer = styled.div`
 
 export const Nav = styled.nav`
     display: flex;
-    height: 100%
+    height: 100%;
 `;
 
 export const NavBtn = styled.a`
@@ -33,9 +33,11 @@ export const NavBtn = styled.a`
     flex: none;
     order: 0;
     flex-grow: 0;    
+   
    cursor: pointer;
    margin-right: 32px;
    height: 100%;
+   transition: all .2s;
 
    &:hover{
        border-bottom: 2px solid #5ECE7B;

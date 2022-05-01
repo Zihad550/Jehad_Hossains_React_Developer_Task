@@ -26,9 +26,8 @@ function Bag({ cartProducts, handleAddToCart }) {
 
     return 0;
   };
-  console.log(cartProducts);
   return (
-    <div>
+    <div style={{ marginBottom: '20px' }}>
       {/* header */}
       <Header />
 
@@ -109,7 +108,6 @@ function Bag({ cartProducts, handleAddToCart }) {
 Bag.propTypes = {
   cartProducts: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
   handleAddToCart: PropTypes.func.isRequired,
-  // currency: PropTypes.string.isRequired,
 };
 
 export default Bag;

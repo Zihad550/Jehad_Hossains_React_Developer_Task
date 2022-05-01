@@ -1,6 +1,3 @@
-import {
-  ApolloClient, InMemoryCache
-} from '@apollo/client';
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import SelectedProductsContext from '../../Contexts/SelectedProductsContext';
@@ -8,11 +5,6 @@ import GlobalStyle from '../shared/Styles/Global.styles';
 import Bag from './Bag/Bag';
 import Home from './Home/Home';
 import ProductDetail from './ProductDetail/ProductDetail';
-
-export const client = new ApolloClient({
-  uri: 'http://localhost:4000/',
-  cache: new InMemoryCache(),
-});
 
 export default class App extends Component {
   constructor(props) {
