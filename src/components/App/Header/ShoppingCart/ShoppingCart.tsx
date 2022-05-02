@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import CartContainer, {
@@ -9,10 +8,12 @@ import CartContainer, {
   CartProductImgWrp,
   CartTotal,
   Quantity
-} from '../../shared/Styles/Containers/Cart';
-import Button from '../../shared/Styles/Tags/Button';
+} from '../../../shared/Styles/Containers/Cart';
+import Button from '../../../shared/Styles/Tags/Button';
+import { ShoppingCartProps } from './types';
 
-class ShoppingCart extends Component {
+
+class ShoppingCart extends Component <ShoppingCartProps>{
   calculateTotal = () => {
     const { cartProducts } = this.props;
     const total = cartProducts.map((product) => product.productTotal);
@@ -24,7 +25,7 @@ class ShoppingCart extends Component {
   };
 
   render() {
-    const { cartProducts, handleAddToCart, currency } = this.props;
+    const { cartProducts,  currency , handleUpdateCart} = this.props;
     return (
       <CartBackground>
         <CartContainer>
@@ -63,14 +64,14 @@ class ShoppingCart extends Component {
                   {/* quantity btn */}
                   <Quantity>
 
-                    <CartBtn onClick={() => handleAddToCart({ id: product.id })} type="button">
+                    <CartBtn onClick={() => handleUpdateCart({ id: product.id , option: 'add'})} type="button">
                       +
                     </CartBtn>
                     <p>
                       {product.quantity}
                     </p>
 
-                    <CartBtn onClick={() => handleAddToCart({ id: product.id, option: 'decrease' })} type="button">
+                    <CartBtn onClick={() => handleUpdateCart({ id: product.id, option: 'remove' })} type="button">
                       -
                     </CartBtn>
                   </Quantity>
@@ -107,22 +108,5 @@ class ShoppingCart extends Component {
   }
 }
 
-ShoppingCart.propTypes = {
-  cartProducts: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string,
-    inStock: PropTypes.bool,
-    prices: PropTypes.arrayOf(PropTypes.shape({
-      amount: PropTypes.number.isRequired,
-      currency: PropTypes.shape({
-        label: PropTypes.string.isRequired,
-        symbol: PropTypes.string.isRequired,
-      }),
-    })),
-    gallery: PropTypes.arrayOf(PropTypes.string),
-    id: PropTypes.string,
-  })).isRequired,
-  handleAddToCart: PropTypes.func.isRequired,
-  currency: PropTypes.string.isRequired,
-};
 
 export default ShoppingCart;

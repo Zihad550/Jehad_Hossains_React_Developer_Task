@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import withParams from '../../../HOC/withParams';
 import client from '../../../services/ApolloClient';
 import Spinner from '../../shared/Spinner/Spinner';
 import Container from '../../shared/Styles/Containers/Container';
@@ -8,22 +8,44 @@ import ProductsContainer from '../../shared/Styles/Containers/ProductsContainer'
 import Title from '../../shared/Styles/Tags/Title';
 import Toast from '../../shared/Toast/Toast';
 import Product from '../Product/Product';
+import { HomeProps, HomeStates } from './types';
 
-class Home extends Component {
-  constructor(props) {
+
+class Home extends Component <HomeProps, HomeStates> {
+  constructor(props: HomeProps) {
     super(props);
     this.state = {
       products: [],
       productsLoading: true,
       showToast: false,
+      category: 'all',
     };
   }
 
   // call get products when component mounts
   componentDidMount() {
-    const { category } = this.props;
+    let { category } = this.props.params;
+    if(category === undefined) category = 'all';
+    this.setState({category});
     this.getProducts(category);
   }
+
+  componentDidUpdate(prevProps: HomeProps, prevStates: HomeStates){
+    console.log(prevStates.category);
+    console.log(prevStates)
+    let {category} = this.props.params;
+    if(prevStates.category !== category && category !== undefined){
+      this.setState({category});
+      this.getProducts(category)
+    }
+  }
+
+  /* shouldComponentUpdate(prevProps: HomeProps, prevStates: HomeStates){
+    console.log(prevProps)
+    console.log(prevStates)
+    
+    return true;
+  } */
 
   handleToast = () => {
     this.setState({ showToast: false });
@@ -63,6 +85,7 @@ class Home extends Component {
     const {
       currency, cartProducts, handleAddToCart, category
     } = this.props;
+    console.log(category)
 
     // when product loading
     if (productsLoading) {
@@ -73,7 +96,7 @@ class Home extends Component {
 
         {/* toast */}
         {
-            showToast && <Toast message="Product not available" onClick={this.handleToast} variant="" type="button" />
+            showToast && <Toast message="Product not available" onClick={this.handleToast} variant=""/>
           }
 
         {/* title */}
@@ -102,24 +125,5 @@ class Home extends Component {
   }
 }
 
-Home.propTypes = {
-  currency: PropTypes.string.isRequired,
-  cartProducts: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string,
-    inStock: PropTypes.bool,
-    prices: PropTypes.arrayOf(PropTypes.shape({
-      amount: PropTypes.number.isRequired,
-      currency: PropTypes.shape({
-        label: PropTypes.string.isRequired,
-        symbol: PropTypes.string.isRequired,
-      }),
-    })),
-    gallery: PropTypes.arrayOf(PropTypes.string),
-    id: PropTypes.string,
-  })).isRequired,
 
-  handleAddToCart: PropTypes.func.isRequired,
-  category: PropTypes.string.isRequired,
-};
-
-export default Home;
+export default withParams(Home);

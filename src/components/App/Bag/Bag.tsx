@@ -1,16 +1,14 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import {
   CartBody,
-  CartBtn,
-  CartProduct,
-  CartProductImgWrp,
+  CartBtn, CartProduct, CartProductImgWrp,
   Quantity
 } from '../../shared/Styles/Containers/Cart';
 import Container from '../../shared/Styles/Containers/Container';
 import Button from '../../shared/Styles/Tags/Button';
+import { BagProps } from './types';
 
-function Bag({ cartProducts, handleAddToCart }) {
+function Bag({ cartProducts, handleAddToCart, handleUpdateCart }: BagProps) {
   const calculateTotal = () => {
     const total = cartProducts.map((product) => product.productTotal);
     if (total.length) return total?.reduce((prev, next) => prev + next).toFixed(2);
@@ -56,7 +54,7 @@ function Bag({ cartProducts, handleAddToCart }) {
                   {/* quantity btn */}
                   <Quantity>
                     <CartBtn
-                      onClick={() => handleAddToCart({ id: product.id })}
+                      onClick={() => handleUpdateCart({ id: product.id, option: 'add' })}
                       type="button"
                     >
                       +
@@ -64,7 +62,7 @@ function Bag({ cartProducts, handleAddToCart }) {
                     <p>{product.quantity}</p>
 
                     <CartBtn
-                      onClick={() => handleAddToCart({ id: product.id, option: 'decrease' })}
+                      onClick={() => handleUpdateCart({ id: product.id, option: 'remove' })}
                       type="button"
                     >
                       -
@@ -99,22 +97,5 @@ function Bag({ cartProducts, handleAddToCart }) {
   );
 }
 
-Bag.propTypes = {
-  cartProducts: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string,
-    inStock: PropTypes.bool,
-    prices: PropTypes.arrayOf(PropTypes.shape({
-      amount: PropTypes.number.isRequired,
-      currency: PropTypes.shape({
-        label: PropTypes.string.isRequired,
-        symbol: PropTypes.string.isRequired,
-      }),
-    })),
-    gallery: PropTypes.arrayOf(PropTypes.string),
-    id: PropTypes.string,
-  })).isRequired,
-  // cartProducts: PropTypes.string.isRequired,
-  handleAddToCart: PropTypes.func.isRequired,
-};
 
 export default Bag;

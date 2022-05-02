@@ -1,7 +1,6 @@
 import { gql } from '@apollo/client';
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { useParams } from 'react-router-dom';
+import withParams from '../../../HOC/withParams';
 import client from '../../../services/ApolloClient';
 import Spinner from '../../shared/Spinner/Spinner';
 import Container from '../../shared/Styles/Containers/Container';
@@ -13,18 +12,22 @@ import DetailContainer, {
   Details,
   Price
 } from '../../shared/Styles/Containers/Detail';
+import { ProductDetailProps, ProductDetailStates } from './types';
 
-function withParams(Element) {
-  return function (props) {
-    return <Element {...props} params={useParams()} />;
-  };
-}
-
-class ProductDetail extends Component {
-  constructor(props) {
+class ProductDetail extends Component <ProductDetailProps, ProductDetailStates>{
+  constructor(props: ProductDetailProps) {
     super(props);
     this.state = {
-      product: {},
+      product: {  
+        name: '',
+        inStock: false,
+        prices: [],
+        id: '',
+        gallery: [],
+        description: '',
+        attributes: [],
+        brand: '',
+        },
       isLoading: true,
     };
   }
@@ -82,17 +85,18 @@ class ProductDetail extends Component {
     const {
       name, attributes, description, brand, id, gallery, prices, inStock
     } = product;
-    const { currency, handleAddToCart } = this.props;
+    const {  handleAddToCart , currency: changedCurrency} = this.props;
 
     // when product loading
     if (isLoading) {
       return <Spinner />;
     }
 
-    const productPrice = prices.find(
-      (price) => price.currency.symbol === currency
-    );
-    const { amount } = productPrice;
+    const productPrice  =  prices.find(
+      (price) => price.currency.symbol === changedCurrency
+    ) || {amount: 0, currency:{symbol: '$', label: 'Doller'}}
+    
+    const { amount , currency} = productPrice;
     return (
       <Container>
         <DetailContainer>
@@ -144,7 +148,7 @@ class ProductDetail extends Component {
               <p>Price:</p>
               <p style={{ margin: '15px 0' }}>
                 <span>
-                  {currency}
+                  {currency.symbol}
                 </span>
                 {amount}
               </p>
@@ -155,8 +159,8 @@ class ProductDetail extends Component {
                 id,
                 name,
                 src: gallery[0],
-                amount,
-                currency,
+                amount: amount,
+                currency: currency,
                 productTotal: amount,
                 quantity: 1,
                 inStock,
@@ -178,13 +182,5 @@ class ProductDetail extends Component {
     );
   }
 }
-
-ProductDetail.propTypes = {
-  currency: PropTypes.string.isRequired,
-  params: PropTypes.shape({
-    id: PropTypes.string
-  }).isRequired,
-  handleAddToCart: PropTypes.func.isRequired,
-};
 
 export default withParams(ProductDetail);

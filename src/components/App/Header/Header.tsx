@@ -1,9 +1,8 @@
 import { gql } from '@apollo/client';
-import PropTypes from 'prop-types';
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../../assets/logo/logo.svg';
-import WithRouter from '../../../HOC/WithRouter';
+import WithRouter from '../../../HOC/withRouter';
 import client from '../../../services/ApolloClient';
 import Cart from '../../shared/CartIcon/CartIcon';
 import Spinner from '../../shared/Spinner/Spinner';
@@ -14,16 +13,18 @@ import HeaderContainer, {
   NavBtn
 } from '../../shared/Styles/Containers/HeaderContainer';
 import Select from '../../shared/Styles/Tags/Select';
-import ShoppingCart from '../ShoppingCart/ShoppingCart';
+import ShoppingCart from './ShoppingCart/ShoppingCart';
+import { HeaderProps, HeaderStates } from './types';
 
-class Header extends React.Component {
+
+class Header extends React.Component <HeaderProps, HeaderStates> {
   navs = [
     { id: 1, name: 'all', link: '/', },
     { id: 2, name: 'clothes', link: '/', },
     { id: 3, name: 'tech', link: '/', },
   ];
 
-  constructor(props) {
+  constructor(props: HeaderProps) {
     super(props);
     this.state = {
       currencies: [],
@@ -47,7 +48,7 @@ class Header extends React.Component {
       }
       `,
     },).then((res,) => {
-      this.setState({ currencies: res.data.currencies, loading: res.loading, },);
+      this.setState({ currencies: res.data.currencies, loading: res.loading });
     },);
   };
 
@@ -57,10 +58,8 @@ class Header extends React.Component {
     }),);
   };
 
-  handleAddToCategory = (name) => {
-    const { handleCategory } = this.props;
-    handleCategory(name);
-    this.props.navigate('/');
+  handleAddToCategory = (name: string) => {
+    this.props.navigate(`/${name}`);
   };
 
   render() {
@@ -69,7 +68,7 @@ class Header extends React.Component {
       handleCurrency,
       cartProducts,
       currency,
-      handleAddToCart,
+      handleUpdateCart
     } = this.props;
 
     // destructured states
@@ -109,9 +108,9 @@ class Header extends React.Component {
             {/* features */}
             <Features>
               {/* currency */}
-              <Select onChange={(e,) => handleCurrency(e.target.value,)}>
+              <Select onChange={(e: ChangeEvent<HTMLFormElement>) => handleCurrency(e.target.value)}>
                 {
-                currencies.map((productCurrency,) => (
+                currencies.map((productCurrency) => (
                   <option
                     key={productCurrency.symbol}
                     value={productCurrency.symbol}
@@ -125,7 +124,7 @@ class Header extends React.Component {
               {/* shopping cart */}
               <div>
                 <button type="button" onClick={this.handleShowCart}>
-                  <Cart color="black" width="20px" />
+                  <Cart color="black" width="20px" height="auto" />
                 </button>
               </div>
             </Features>
@@ -136,9 +135,9 @@ class Header extends React.Component {
           showCart
            && (
            <ShoppingCart
-             handleAddToCart={handleAddToCart}
              cartProducts={cartProducts}
              currency={currency}
+             handleUpdateCart={handleUpdateCart}
            />
            )
         }
@@ -147,24 +146,5 @@ class Header extends React.Component {
   }
 }
 
-Header.propTypes = {
-  handleCategory: PropTypes.func.isRequired,
-  handleCurrency: PropTypes.func.isRequired,
-  cartProducts: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string,
-    inStock: PropTypes.bool,
-    prices: PropTypes.arrayOf(PropTypes.shape({
-      amount: PropTypes.number.isRequired,
-      currency: PropTypes.shape({
-        label: PropTypes.string.isRequired,
-        symbol: PropTypes.string.isRequired,
-      }),
-    })),
-    gallery: PropTypes.arrayOf(PropTypes.string),
-    id: PropTypes.string,
-  })).isRequired,
-  currency: PropTypes.string.isRequired,
-  handleAddToCart: PropTypes.func.isRequired,
-};
 
 export default WithRouter(Header);

@@ -1,38 +1,28 @@
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { Navigate } from 'react-router-dom';
+import WithRouter from '../../../HOC/withRouter';
 import Cart from '../../shared/CartIcon/CartIcon';
 import Card, { CardBody, CardHeader } from '../../shared/Styles/Containers/Card';
+import { ProductProps } from './types';
 
-class Product extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      navigate: false,
-    };
-  }
 
-  handleNavigate = () => {
-    this.setState({ navigate: true });
+class Product extends Component <ProductProps>{
+  handleNavigate = (id: string) => {
+    this.props.navigate(`/detail/${id}`)
   };
 
   render() {
-    const { navigate } = this.state;
     const { product, handleAddToCart, currency: changedCurrency } = this.props;
     const {
       name, inStock, prices, gallery, id,
     } = product;
 
-    const productPrice = prices.find((price) => price.currency.symbol === changedCurrency);
+    const productPrice = prices.find((price) => price.currency.symbol === changedCurrency) || {amount: 0, currency: {label: 'Doller', symbol: '$'}};
 
     const { amount, currency } = productPrice;
 
     return (
       <Card>
-        {
-          navigate && <Navigate to={`/detail/${id}`} />
-        }
-        <CardHeader onClick={this.handleNavigate}>
+        <CardHeader onClick={() => this.handleNavigate(id)}>
           <img style={{ width: '100%' }} src={gallery[0]} alt="" />
           {
           inStock || (
@@ -57,7 +47,7 @@ class Product extends Component {
               })}
               type="button"
             >
-              <Cart width="20px" color="white" />
+              <Cart width="20px" color="white" height="auto" />
             </button>
           </div>
 
@@ -74,22 +64,4 @@ class Product extends Component {
   }
 }
 
-Product.propTypes = {
-  product: PropTypes.shape({
-    name: PropTypes.string,
-    inStock: PropTypes.bool,
-    prices: PropTypes.arrayOf(PropTypes.shape({
-      amount: PropTypes.number.isRequired,
-      currency: PropTypes.shape({
-        label: PropTypes.string.isRequired,
-        symbol: PropTypes.string.isRequired,
-      }),
-    })),
-    gallery: PropTypes.arrayOf(PropTypes.string),
-    id: PropTypes.string,
-  }).isRequired,
-  handleAddToCart: PropTypes.func.isRequired,
-  currency: PropTypes.string.isRequired,
-};
-
-export default Product;
+export default WithRouter(Product);
