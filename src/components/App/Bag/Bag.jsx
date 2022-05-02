@@ -13,16 +13,13 @@ import Button from '../../shared/Styles/Tags/Button';
 function Bag({ cartProducts, handleAddToCart }) {
   const calculateTotal = () => {
     const total = cartProducts.map((product) => product.productTotal);
-
     if (total.length) return total?.reduce((prev, next) => prev + next).toFixed(2);
-
     return 0;
   };
 
   const caculateQuantity = () => {
     const quantity = cartProducts.map((product) => product.quantity);
     if (quantity.length) return quantity?.reduce((prev, next) => prev + next);
-
     return 0;
   };
   return (

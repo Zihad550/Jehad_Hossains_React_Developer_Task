@@ -1,8 +1,9 @@
 import { gql } from '@apollo/client';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import logo from '../../../assets/logo/logo.svg';
+import WithRouter from '../../../HOC/WithRouter';
 import client from '../../../services/ApolloClient';
 import Cart from '../../shared/CartIcon/CartIcon';
 import Spinner from '../../shared/Spinner/Spinner';
@@ -28,7 +29,6 @@ class Header extends React.Component {
       currencies: [],
       loading: true,
       showCart: false,
-      navigate: false,
     };
   }
 
@@ -58,20 +58,25 @@ class Header extends React.Component {
   };
 
   handleAddToCategory = (name) => {
-    this.setState({ navigate: true });
     const { handleCategory } = this.props;
     handleCategory(name);
+    this.props.navigate('/');
   };
 
   render() {
     // destructured props
     const {
-      handleCurrency, cartProducts, currency, handleAddToCart,
+      handleCurrency,
+      cartProducts,
+      currency,
+      handleAddToCart,
     } = this.props;
 
     // destructured states
     const {
-      currencies, loading, showCart, navigate,
+      currencies,
+      loading,
+      showCart,
     } = this.state;
 
     if (loading) {
@@ -80,9 +85,6 @@ class Header extends React.Component {
 
     return (
       <>
-        {
-           navigate && <Navigate to="/" />
-        }
         <HeaderContainer>
           <div>
             {/* navs */}
@@ -91,7 +93,7 @@ class Header extends React.Component {
               this.navs.map((nav) => (
                 <NavBtn
                   key={nav.id}
-                  onClick={() => this.handleAddToCategory(nav.name,)}
+                  onClick={() => this.handleAddToCategory(nav.name)}
                   type="button"
                 >
                   {nav.name}
@@ -165,4 +167,4 @@ Header.propTypes = {
   handleAddToCart: PropTypes.func.isRequired,
 };
 
-export default Header;
+export default WithRouter(Header);

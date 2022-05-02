@@ -31,7 +31,6 @@ class ProductDetail extends Component {
 
   componentDidMount() {
     const { params } = this.props;
-
     this.getProduct(params.id);
   }
 
@@ -84,7 +83,6 @@ class ProductDetail extends Component {
       name, attributes, description, brand, id, gallery, prices, inStock
     } = product;
     const { currency, handleAddToCart } = this.props;
-    console.log(attributes);
 
     // when product loading
     if (isLoading) {

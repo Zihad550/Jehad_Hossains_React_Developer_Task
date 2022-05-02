@@ -15,7 +15,6 @@ class Home extends Component {
     this.state = {
       products: [],
       productsLoading: true,
-      // shouldUpdate: true,
       showToast: false,
     };
   }
@@ -59,10 +58,10 @@ class Home extends Component {
 
   render() {
     const {
-      category, productsLoading, products, showToast,
+      productsLoading, products, showToast,
     } = this.state;
     const {
-      currency, cartProducts, handleAddToCart,
+      currency, cartProducts, handleAddToCart, category
     } = this.props;
 
     // when product loading
@@ -70,32 +69,21 @@ class Home extends Component {
       return <Spinner />;
     }
     return (
-      <>
+      <Container>
 
-        {/* header */}
-        {/* <Header
-          cartProducts={cartProducts}
-          handleCategory={this.handleCategory}
-          handleCurrency={handleCurrency}
-          currency={currency}
-          handleAddToCart={handleAddToCart}
-        /> */}
-
-        <Container>
-
-          {/* toast */}
-          {
+        {/* toast */}
+        {
             showToast && <Toast message="Product not available" onClick={this.handleToast} variant="" type="button" />
           }
 
-          {/* title */}
-          <Title>
-            {category}
-          </Title>
+        {/* title */}
+        <Title>
+          {category}
+        </Title>
 
-          {/* main */}
-          <ProductsContainer>
-            {
+        {/* main */}
+        <ProductsContainer>
+          {
           products.map((product) => (
             <Product
               product={product}
@@ -106,20 +94,17 @@ class Home extends Component {
             />
           ))
         }
-          </ProductsContainer>
+        </ProductsContainer>
 
-        </Container>
-
-      </>
+      </Container>
 
     );
   }
 }
 
 Home.propTypes = {
-  // handleCurrency: PropTypes.func.isRequired,
   currency: PropTypes.string.isRequired,
-  cartProducts: PropTypes.shape({
+  cartProducts: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string,
     inStock: PropTypes.bool,
     prices: PropTypes.arrayOf(PropTypes.shape({
@@ -131,7 +116,7 @@ Home.propTypes = {
     })),
     gallery: PropTypes.arrayOf(PropTypes.string),
     id: PropTypes.string,
-  }).isRequired,
+  })).isRequired,
 
   handleAddToCart: PropTypes.func.isRequired,
   category: PropTypes.string.isRequired,

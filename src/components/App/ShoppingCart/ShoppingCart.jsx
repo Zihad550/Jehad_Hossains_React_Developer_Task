@@ -37,7 +37,7 @@ class ShoppingCart extends Component {
           </h4>
           {
             cartProducts.map((product) => (
-              <CartProduct for="cart" key={product.id}>
+              <CartProduct htmlFor="cart" key={product.id}>
                 {/* name & price & size btn */}
                 <CartBody>
                   {/* name */}
@@ -108,7 +108,19 @@ class ShoppingCart extends Component {
 }
 
 ShoppingCart.propTypes = {
-  cartProducts: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
+  cartProducts: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string,
+    inStock: PropTypes.bool,
+    prices: PropTypes.arrayOf(PropTypes.shape({
+      amount: PropTypes.number.isRequired,
+      currency: PropTypes.shape({
+        label: PropTypes.string.isRequired,
+        symbol: PropTypes.string.isRequired,
+      }),
+    })),
+    gallery: PropTypes.arrayOf(PropTypes.string),
+    id: PropTypes.string,
+  })).isRequired,
   handleAddToCart: PropTypes.func.isRequired,
   currency: PropTypes.string.isRequired,
 };

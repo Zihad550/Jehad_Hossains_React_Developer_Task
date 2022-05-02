@@ -34,7 +34,6 @@ export default class App extends Component {
 
   // handle product adding to cart
   handleAddToCart = (product) => {
-    console.log('inside');
     if (product === undefined) return;
 
     if (product.inStock || product.inStock === undefined) {
@@ -86,7 +85,9 @@ export default class App extends Component {
   };
 
   render() {
-    const { currency, cartProducts, category } = this.state;
+    const {
+      currency, cartProducts, category
+    } = this.state;
     return (
       <SelectedProductsContext.Provider value={this.state}>
         <GlobalStyle />
@@ -111,6 +112,7 @@ export default class App extends Component {
                   currency={currency}
                   handleAddToCart={this.handleAddToCart}
                   cartProducts={cartProducts}
+
                 />
 )}
             />
