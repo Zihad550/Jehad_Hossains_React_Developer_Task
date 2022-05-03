@@ -31,7 +31,7 @@ function Bag({ cartProducts, handleAddToCart, handleUpdateCart }: BagProps) {
         {/* body */}
         <div>
           {cartProducts.map((product) => (
-            <>
+            <div key={product.id}>
               <CartProduct key={product.id}>
                 {/* name & price & size btn */}
                 <CartBody>
@@ -72,7 +72,7 @@ function Bag({ cartProducts, handleAddToCart, handleUpdateCart }: BagProps) {
                 </CartProductImgWrp>
               </CartProduct>
               <hr style={{ margin: '2rem 0' }} />
-            </>
+            </div>
           ))}
         </div>
         {/* total , tax and quantity */}

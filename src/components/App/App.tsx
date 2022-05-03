@@ -11,7 +11,6 @@ import ProductDetail from './ProductDetail/ProductDetail';
 interface AppStates {
   currency: string,
   cartProducts: ICartProduct[],
-  isUpdated: boolean,
   category: string,
 }
 
@@ -21,14 +20,10 @@ class App extends Component <{}, AppStates> {
     this.state = {
       currency: '$',
       cartProducts: [],
-      isUpdated: false,
       category: 'all',
     };
   }
 
-  shouldComponentUpdate() {
-    return this.state.isUpdated;
-  }
 
   // handle currency
   handleCurrency = (currency: string) => {
@@ -37,7 +32,6 @@ class App extends Component <{}, AppStates> {
 
   // handle category
   handleCategory = (category: string) => {
-    console.log(category)
     this.setState(() => ({ category }));
   };
 
@@ -47,27 +41,34 @@ class App extends Component <{}, AppStates> {
        alert('Product out of stock');
         return;
       }
-      const { id} = product;
-      const exists = this.state.cartProducts.find(cartProduct => cartProduct.id === product.id);
-      
-      // if the product exists then its quantity will increase
-      if (exists) {
+      const {id} = product;
+      const {cartProducts} = this.state;
+      const existingProduct = cartProducts.find(product => product.id === id);
+      // if product exists then update the product
+      if (existingProduct) {
         this.handleUpdateCart({id , option:'add'});
       }
       else {
         this.setState((prevState) => ({
           cartProducts: [...prevState.cartProducts, product],
         }));
-        this.setState({ isUpdated: true });
+        
       }
     };
 
   // handle product update
   handleUpdateCart = ({id, option}: {id: string, option: 'add' | 'remove'}) => {
     // destructure state
-    const {cartProducts} = this.state;
-    const product = cartProducts.find((cartProduct) => cartProduct.id === id);
-    // increase product price and quantity
+    const { cartProducts } = this.state;
+
+    let existingProduct;
+    for(let i = 0; i < cartProducts.length ; i++){
+      if(cartProducts[i].id === id){
+        existingProduct = {...cartProducts[i], position: i};
+      }
+    }
+    
+    const product = existingProduct;
     
     if(product && option === 'add'){
       // update quantity
@@ -75,17 +76,25 @@ class App extends Component <{}, AppStates> {
       product.productTotal += product.amount;
       // add the updated product to the state
       const existingProducts = cartProducts.filter(product => product.id !== id);
-      this.setState({cartProducts: [...existingProducts, product]})
+      existingProducts.splice(product.position, 0, product)
+      this.setState({cartProducts: existingProducts})
     }
     if(product && option === 'remove'){
-      // update quantity
+      // update quantity & amount
       product.quantity -= 1;
       product.productTotal -= product.amount;
-      // add the updated product to the state
+
+      // filter the existing products
       const existingProducts = cartProducts.filter(product => product.id !== id);
-      
-      if(!product.quantity) this.setState({cartProducts: [...existingProducts]})
-      if(product.quantity) this.setState({cartProducts: [...existingProducts, product]})
+      // if product quantity is > 0 then update the product
+      if(product.quantity){
+        existingProducts.splice(product.position, 0, product);
+        this.setState({cartProducts: existingProducts});
+      }
+      // if product quantity is === 0 then remove it 
+      else{
+        this.setState({cartProducts: existingProducts});
+      }
     }
     else{
       return;
@@ -146,7 +155,6 @@ class App extends Component <{}, AppStates> {
 
           </Routes>
         </BrowserRouter>
-
       </SelectedProductsContext.Provider>
     );
   }

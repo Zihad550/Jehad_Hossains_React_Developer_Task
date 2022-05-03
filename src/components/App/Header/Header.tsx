@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import logo from '../../../assets/logo/logo.svg';
 import WithRouter from '../../../HOC/withRouter';
 import client from '../../../services/ApolloClient';
-import Cart from '../../shared/CartIcon/CartIcon';
+import CartIcon from '../../shared/CartIcon/CartIcon';
 import Spinner from '../../shared/Spinner/Spinner';
 import HeaderContainer, {
   Bag,
@@ -124,7 +124,7 @@ class Header extends React.Component <HeaderProps, HeaderStates> {
               {/* shopping cart */}
               <div>
                 <button type="button" onClick={this.handleShowCart}>
-                  <Cart color="black" width="20px" height="auto" />
+                  <CartIcon color="black" width="20px" height="100%" />
                 </button>
               </div>
             </Features>

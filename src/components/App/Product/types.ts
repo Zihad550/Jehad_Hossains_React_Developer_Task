@@ -3,7 +3,7 @@ import { ICartProduct, IProduct } from "../../../types";
 
 export interface ProductProps {
     product: IProduct,
-     handleAddToCart: ({}: ICartProduct) => void,
+     handleAddToCart: (params: ICartProduct) => void,
       currency: string ,
       navigate: NavigateFunction
   }

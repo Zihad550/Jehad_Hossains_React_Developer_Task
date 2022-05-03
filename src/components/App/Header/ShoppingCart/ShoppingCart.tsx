@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import CartContainer, {
   CartBackground,
@@ -12,10 +12,10 @@ import CartContainer, {
 import Button from '../../../shared/Styles/Tags/Button';
 import { ShoppingCartProps } from './types';
 
+const ShoppingCart = ({cartProducts, currency, handleUpdateCart}: ShoppingCartProps) => {
 
-class ShoppingCart extends Component <ShoppingCartProps>{
-  calculateTotal = () => {
-    const { cartProducts } = this.props;
+ const calculateTotal = () => {
+    
     const total = cartProducts.map((product) => product.productTotal);
 
     if (total.length !== 0) {
@@ -24,8 +24,6 @@ class ShoppingCart extends Component <ShoppingCartProps>{
     return 0;
   };
 
-  render() {
-    const { cartProducts,  currency , handleUpdateCart} = this.props;
     return (
       <CartBackground>
         <CartContainer>
@@ -89,7 +87,7 @@ class ShoppingCart extends Component <ShoppingCartProps>{
               <p>
                 <span>{currency}</span>
                 {
-                  this.calculateTotal()
+                  calculateTotal()
                 }
               </p>
             </div>
@@ -106,7 +104,7 @@ class ShoppingCart extends Component <ShoppingCartProps>{
       </CartBackground>
     );
   }
-}
+
 
 
 export default ShoppingCart;

@@ -1,17 +1,18 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import WithRouter from '../../../HOC/withRouter';
-import Cart from '../../shared/CartIcon/CartIcon';
+import CartIcon from '../../shared/CartIcon/CartIcon';
 import Card, { CardBody, CardHeader } from '../../shared/Styles/Containers/Card';
 import { ProductProps } from './types';
 
 
-class Product extends Component <ProductProps>{
-  handleNavigate = (id: string) => {
-    this.props.navigate(`/detail/${id}`)
+const Product = ({product, handleAddToCart, currency: changedCurrency}: ProductProps) => {
+  
+  const navigate = useNavigate();
+  const handleNavigate = (id: string) => {
+    navigate(`/detail/${id}`)
   };
 
-  render() {
-    const { product, handleAddToCart, currency: changedCurrency } = this.props;
     const {
       name, inStock, prices, gallery, id,
     } = product;
@@ -22,7 +23,7 @@ class Product extends Component <ProductProps>{
 
     return (
       <Card>
-        <CardHeader onClick={() => this.handleNavigate(id)}>
+        <CardHeader onClick={() => handleNavigate(id)}>
           <img style={{ width: '100%' }} src={gallery[0]} alt="" />
           {
           inStock || (
@@ -47,7 +48,7 @@ class Product extends Component <ProductProps>{
               })}
               type="button"
             >
-              <Cart width="20px" color="white" height="auto" />
+              <CartIcon width="20px" color="white" height="100%" />
             </button>
           </div>
 
@@ -62,6 +63,6 @@ class Product extends Component <ProductProps>{
       </Card>
     );
   }
-}
+
 
 export default WithRouter(Product);

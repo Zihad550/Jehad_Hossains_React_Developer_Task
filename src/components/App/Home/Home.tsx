@@ -20,7 +20,7 @@ class Home extends Component <HomeProps, HomeStates> {
       showToast: false,
       category: 'all',
     };
-  }
+  };
 
   // call get products when component mounts
   componentDidMount() {
@@ -28,24 +28,15 @@ class Home extends Component <HomeProps, HomeStates> {
     if(category === undefined) category = 'all';
     this.setState({category});
     this.getProducts(category);
-  }
+  };
 
   componentDidUpdate(prevProps: HomeProps, prevStates: HomeStates){
-    console.log(prevStates.category);
-    console.log(prevStates)
     let {category} = this.props.params;
     if(prevStates.category !== category && category !== undefined){
       this.setState({category});
       this.getProducts(category)
-    }
-  }
-
-  /* shouldComponentUpdate(prevProps: HomeProps, prevStates: HomeStates){
-    console.log(prevProps)
-    console.log(prevStates)
-    
-    return true;
-  } */
+    };
+  };
 
   handleToast = () => {
     this.setState({ showToast: false });
@@ -85,7 +76,6 @@ class Home extends Component <HomeProps, HomeStates> {
     const {
       currency, cartProducts, handleAddToCart, category
     } = this.props;
-    console.log(category)
 
     // when product loading
     if (productsLoading) {
@@ -120,7 +110,6 @@ class Home extends Component <HomeProps, HomeStates> {
         </ProductsContainer>
 
       </Container>
-
     );
   }
 }
