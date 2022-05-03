@@ -1,4 +1,5 @@
 import React from 'react';
+import { ICartProduct } from '../../../types';
 import {
   CartBody,
   CartBtn, CartProduct, CartProductImgWrp,
@@ -6,9 +7,13 @@ import {
 } from '../../shared/Styles/Containers/Cart';
 import Container from '../../shared/Styles/Containers/Container';
 import Button from '../../shared/Styles/Tags/Button';
-import { BagProps } from './types';
 
-function Bag({ cartProducts, handleAddToCart, handleUpdateCart }: BagProps) {
+interface BagProps {
+    cartProducts: ICartProduct[],
+    handleUpdateCart: ({}: {id: string, option: 'add' | 'remove'}) => void,
+  }
+
+function Bag({ cartProducts, handleUpdateCart }: BagProps) {
   const calculateTotal = () => {
     const total = cartProducts.map((product) => product.productTotal);
     if (total.length) return total?.reduce((prev, next) => prev + next).toFixed(2);
@@ -96,6 +101,5 @@ function Bag({ cartProducts, handleAddToCart, handleUpdateCart }: BagProps) {
     </div>
   );
 }
-
 
 export default Bag;

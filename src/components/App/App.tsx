@@ -150,7 +150,6 @@ class App extends Component <{}, AppStates> {
             {/* bag */}
             <Route path="/bag" element={<Bag 
             cartProducts={cartProducts}
-             handleAddToCart={this.handleAddToCart}
              handleUpdateCart={this.handleUpdateCart} />} />
 
           </Routes>

@@ -1,8 +1,9 @@
-import { ICartProduct } from "../../../types";
+import { ICartProduct } from '../../../types';
 
-export interface BagProps {
+export default interface BagProps {
     cartProducts: ICartProduct[],
-    handleAddToCart: (params: ICartProduct) => void,
-    handleUpdateCart: (params: {id: string, option: 'add' | 'remove'}) => void,
-  }
-  
+   /*  handleAddToCart: (params: ICartProduct) => void,
+    handleUpdateCart: (params: {id: string, option: 'add' | 'remove'}) => void, */
+    handleAddToCart: () => void,
+    handleUpdateCart: () => void,
+  };
